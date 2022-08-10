@@ -14,6 +14,7 @@ object RetrofitObject {
     }
 
     val test123  = "https://apis.data.go.kr/B551011/GoCamping/searchList?serviceKey=JCrJa4%2F4eF07FKbnkSi7BDDUvnJXCE1CTiyt%2FfnxJ%2B7jewHaXTp5hrKQzOKdWYctQB%2B3a%2FHLuUHkTPq4hqrxvA%3D%3D&numOfRows=10&pageNo=1&MobileOS=%08AND&MobileApp=AppTest&_type=json&keyword=%EB%B6%80%EC%82%B0"
+    val qwer = "https://run.mocky.io/v3/c3e88fdb-18f1-4a80-b546-be68720859db"
 
     private fun getRetrofit() : Retrofit {
         return Retrofit.Builder()

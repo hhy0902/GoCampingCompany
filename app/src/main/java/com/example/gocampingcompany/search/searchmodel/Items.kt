@@ -1,4 +1,4 @@
-package com.example.gocampingcompany.searchmodel
+package com.example.gocampingcompany.search.searchmodel
 
 
 import com.google.gson.annotations.SerializedName

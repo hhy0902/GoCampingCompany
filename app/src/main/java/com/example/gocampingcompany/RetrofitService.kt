@@ -1,6 +1,8 @@
 package com.example.gocampingcompany
 
-import com.example.gocampingcompany.searchmodel.GoCamping
+import com.example.gocampingcompany.search.searchmodel.GoCamping
+import com.example.gocampingcompany.search.searchmodel.Items
+import com.example.gocampingcompany.testmodel.TestModel
 import retrofit2.Call
 import retrofit2.Response
 import retrofit2.http.GET
@@ -17,6 +19,8 @@ interface RetrofitService {
     fun getItemResponse(
         @Query("keyword") keyword : String
     ) : Response<GoCamping>
+
+
 
 
 }
