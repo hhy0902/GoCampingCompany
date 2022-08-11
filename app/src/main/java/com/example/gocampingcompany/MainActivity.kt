@@ -5,6 +5,9 @@ import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
+import android.view.Menu
+import android.view.MenuItem
+import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
@@ -33,6 +36,8 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
+        setSupportActionBar(binding.mainToolbar)
+        supportActionBar?.setDisplayShowTitleEnabled(false)
 
         val searchFragment = SearchFragment()
         val locationFragment = LocationFragment()
@@ -55,6 +60,23 @@ class MainActivity : AppCompatActivity() {
             true
         }
 
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.toolbar_item, menu)
+        return super.onCreateOptionsMenu(menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when(item.itemId) {
+            R.id.toolbarSearch -> {
+                Toast.makeText(this, "search click", Toast.LENGTH_SHORT).show()
+                val searchFragment = SearchFragment()
+                replaceFragment(searchFragment)
+            }
+            R.id.toolbarStar -> Toast.makeText(this, "star click", Toast.LENGTH_SHORT).show()
+        }
+        return super.onOptionsItemSelected(item)
     }
 
     @RequiresApi(Build.VERSION_CODES.O)

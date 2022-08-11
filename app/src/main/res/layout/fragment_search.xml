@@ -8,6 +8,7 @@
         android:id="@+id/searchEditText"
         android:layout_width="0dp"
         android:paddingStart="5dp"
+        android:selectAllOnFocus="true"
         android:layout_height="wrap_content"
         app:layout_constraintEnd_toStartOf="@id/searchButton"
         app:layout_constraintStart_toStartOf="parent"

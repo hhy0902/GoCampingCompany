@@ -23,5 +23,6 @@ class MypageFragment : Fragment(R.layout.fragment_mypage) {
 
 
 
+
     }
 }

@@ -1,8 +1,10 @@
 package com.example.gocampingcompany.search
 
+import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.gocampingcompany.R
@@ -12,15 +14,18 @@ import com.example.gocampingcompany.search.searchmodel.GoCamping
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import java.lang.Boolean.TRUE
 
 class SearchFragment : Fragment(R.layout.fragment_search) {
 
     lateinit var searchAdapter: SearchAdapter
 
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         val fragmentSearchBinding = FragmentSearchBinding.bind(view)
+
 
         searchAdapter = SearchAdapter()
         fragmentSearchBinding.searchRecyclerView.adapter = searchAdapter
