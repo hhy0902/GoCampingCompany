@@ -12,7 +12,7 @@ import com.bumptech.glide.Glide
 import com.example.gocampingcompany.R
 import com.example.gocampingcompany.search.searchmodel.Item
 
-class SearchAdapter : ListAdapter<Item, SearchAdapter.ViewHolder> (differ) {
+class SearchAdapter(val searchItemClick : (Item) -> Unit) : ListAdapter<Item, SearchAdapter.ViewHolder> (differ) {
 
     inner class ViewHolder(itemView : View) : RecyclerView.ViewHolder(itemView) {
 
@@ -21,7 +21,7 @@ class SearchAdapter : ListAdapter<Item, SearchAdapter.ViewHolder> (differ) {
             val image = itemView.findViewById<ImageView>(R.id.imageView)
             val address = itemView.findViewById<TextView>(R.id.addressTextView)
             val tel = itemView.findViewById<TextView>(R.id.telTextView)
-            val iconImage = itemView.findViewById<TextView>(R.id.iconImageView)
+//            val iconImage = itemView.findViewById<TextView>(R.id.iconImageView)
 
             title.text = "[${item.doNm} ${item.sigunguNm}]" + item.facltNm
             address.text = "${item.addr1} ${item.addr2}"
@@ -32,14 +32,13 @@ class SearchAdapter : ListAdapter<Item, SearchAdapter.ViewHolder> (differ) {
                 .error(R.drawable.ic_baseline_image_not_supported_24)
                 .into(image)
 
+            itemView.setOnClickListener {
+                searchItemClick(item)
+            }
+
 //            val icon = "https://www.gocamping.or.kr/img/2018/sub/ico_volt.png"
 
-            val icon = item.sbrsCl?.contains("전기")
-            when(icon) {
-                true -> {
-                    iconImage.text = "전기 true"
-                }
-            }
+
 
         }
     }

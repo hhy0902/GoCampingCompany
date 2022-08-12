@@ -7,9 +7,12 @@
     <androidx.appcompat.widget.AppCompatEditText
         android:id="@+id/searchEditText"
         android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:lines="1"
+        android:maxLines="1"
         android:paddingStart="5dp"
         android:selectAllOnFocus="true"
-        android:layout_height="wrap_content"
         app:layout_constraintEnd_toStartOf="@id/searchButton"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />

@@ -5,7 +5,10 @@
       <map>
         <entry key="app/src/main/res/drawable/item_background.xml" value="0.321875" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.33" />
+        <entry key="app/src/main/res/layout/campingmap_item.xml" value="0.2984375" />
+        <entry key="app/src/main/res/layout/fragment_campingmap.xml" value="0.2984375" />
         <entry key="app/src/main/res/layout/fragment_location.xml" value="0.30572916666666666" />
+        <entry key="app/src/main/res/layout/fragment_map.xml" value="0.2984375" />
         <entry key="app/src/main/res/layout/fragment_mypage.xml" value="0.30572916666666666" />
         <entry key="app/src/main/res/layout/fragment_post.xml" value="0.30572916666666666" />
         <entry key="app/src/main/res/layout/fragment_search.xml" value="0.30572916666666666" />

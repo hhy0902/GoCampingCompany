@@ -4,6 +4,7 @@ import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -26,8 +27,9 @@ class SearchFragment : Fragment(R.layout.fragment_search) {
 
         val fragmentSearchBinding = FragmentSearchBinding.bind(view)
 
-
-        searchAdapter = SearchAdapter()
+        searchAdapter = SearchAdapter(searchItemClick = {
+            Toast.makeText(activity, "title : ${it.facltNm}", Toast.LENGTH_SHORT).show()
+        })
         fragmentSearchBinding.searchRecyclerView.adapter = searchAdapter
         fragmentSearchBinding.searchRecyclerView.layoutManager = LinearLayoutManager(activity)
 
