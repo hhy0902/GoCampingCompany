@@ -4,7 +4,10 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="app/src/main/res/drawable/item_background.xml" value="0.321875" />
+        <entry key="app/src/main/res/layout/activity_detail.xml" value="0.31979166666666664" />
+        <entry key="app/src/main/res/layout/activity_login.xml" value="0.30572916666666666" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.33" />
+        <entry key="app/src/main/res/layout/activity_start.xml" value="0.31979166666666664" />
         <entry key="app/src/main/res/layout/campingmap_item.xml" value="0.2984375" />
         <entry key="app/src/main/res/layout/fragment_campingmap.xml" value="0.2984375" />
         <entry key="app/src/main/res/layout/fragment_location.xml" value="0.30572916666666666" />
@@ -13,6 +16,7 @@
         <entry key="app/src/main/res/layout/fragment_post.xml" value="0.30572916666666666" />
         <entry key="app/src/main/res/layout/fragment_search.xml" value="0.30572916666666666" />
         <entry key="app/src/main/res/layout/fragment_star.xml" value="0.30572916666666666" />
+        <entry key="app/src/main/res/layout/location_item_list.xml" value="0.31979166666666664" />
         <entry key="app/src/main/res/layout/search_item_list.xml" value="0.30572916666666666" />
         <entry key="app/src/main/res/menu/bottom_navigation_menu.xml" value="0.30572916666666666" />
         <entry key="app/src/main/res/menu/menu_item.xml" value="0.30572916666666666" />

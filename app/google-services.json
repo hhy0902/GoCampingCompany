@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "203492175882",
+    "project_id": "gocamping-1e798",
+    "storage_bucket": "gocamping-1e798.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:203492175882:android:9bf7648b5a782810b2eff3",
+        "android_client_info": {
+          "package_name": "com.example.gocampingcompany"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "203492175882-pgla2g6j2eo4nqgmifmd0gvp9fj83qd8.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAQzKzxfPF9g1MBoOWsobMuxqMZtkQzp1U"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "203492175882-pgla2g6j2eo4nqgmifmd0gvp9fj83qd8.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

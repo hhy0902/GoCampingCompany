@@ -1,6 +1,7 @@
 package com.example.gocampingcompany.location
 
 import android.annotation.SuppressLint
+import android.content.Intent
 import android.location.LocationRequest
 import android.os.Build
 import android.os.Bundle
@@ -9,10 +10,13 @@ import android.view.View
 import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.gocampingcompany.DetailActivity
 import com.example.gocampingcompany.R
 import com.example.gocampingcompany.RetrofitObject
 import com.example.gocampingcompany.databinding.FragmentLocationBinding
 import com.example.gocampingcompany.databinding.FragmentSearchBinding
+import com.example.gocampingcompany.location.mylocationmodel.MyLocation
 import com.example.gocampingcompany.search.searchmodel.GoCamping
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationRequest.PRIORITY_HIGH_ACCURACY
@@ -28,6 +32,8 @@ class LocationFragment : Fragment(R.layout.fragment_location) {
     private var nowLat = 0.0
     private var nowLon = 0.0
 
+    lateinit var locationAdapter: LocationAdapter
+
 
     private lateinit var fusedLocationProviderClient : FusedLocationProviderClient
     private var cancellationTokenSource : CancellationTokenSource? = null
@@ -41,6 +47,14 @@ class LocationFragment : Fragment(R.layout.fragment_location) {
 
         fetchLocation()
 
+        locationAdapter = LocationAdapter(locationItemClick = {
+            Toast.makeText(activity, "title : ${it.facltNm}", Toast.LENGTH_SHORT).show()
+            val intent = Intent(activity, DetailActivity::class.java)
+            intent.putExtra("title", "${it.facltNm}")
+            startActivity(intent)
+        })
+        fragmentLocationBinding.myLocationRecyclerView.adapter = locationAdapter
+        fragmentLocationBinding.myLocationRecyclerView.layoutManager = LinearLayoutManager(activity)
 
     }
 
@@ -56,6 +70,27 @@ class LocationFragment : Fragment(R.layout.fragment_location) {
                 nowLat = location.latitude
                 nowLon = location.longitude
                 Log.d("testt location ", "nowLat : ${nowLat}, nowLon : ${nowLon}")
+
+                RetrofitObject.apiService.getMyLocationCamping(nowLat.toString(), nowLon.toString()).enqueue(object : Callback<MyLocation> {
+                    override fun onResponse(call: Call<MyLocation>, response: Response<MyLocation>) {
+                        if (response.isSuccessful) {
+                            response.body()?.let {
+                                Log.d("location ", "${response.body()}")
+                                val response = response.body()
+                                val body = response?.response?.body
+                                val items = body?.items
+                                val itemList = items?.item
+
+                                locationAdapter.submitList(itemList)
+                            }
+                        }
+                    }
+
+                    override fun onFailure(call: Call<MyLocation>, t: Throwable) {
+                        Log.d("onFailure location", "${t.message}")
+                    }
+
+                })
 
 
             } catch (e : Exception) {

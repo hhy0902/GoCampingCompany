@@ -1,5 +1,6 @@
 package com.example.gocampingcompany.map
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.Gravity
@@ -9,6 +10,7 @@ import android.view.View.VISIBLE
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.viewpager2.widget.ViewPager2
+import com.example.gocampingcompany.DetailActivity
 import com.example.gocampingcompany.R
 import com.example.gocampingcompany.RetrofitObject
 import com.example.gocampingcompany.databinding.*
@@ -34,7 +36,6 @@ class CampingMapFragment : Fragment(R.layout.fragment_campingmap), OnMapReadyCal
 
     private lateinit var currentLocationButton : LocationButtonView
 
-    private lateinit var viewPager : ViewPager2
     private lateinit var viewPagerAdapter : CampingMapAdapter
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -62,7 +63,6 @@ class CampingMapFragment : Fragment(R.layout.fragment_campingmap), OnMapReadyCal
 
         naverMap.mapType = NaverMap.MapType.Navi
 
-
         val uiSettings = naverMap.uiSettings
         uiSettings.isLocationButtonEnabled = false
         uiSettings.logoGravity = Gravity.START
@@ -78,33 +78,46 @@ class CampingMapFragment : Fragment(R.layout.fragment_campingmap), OnMapReadyCal
             view?.findViewById<ViewPager2>(R.id.campingMapViewPager)?.visibility = GONE
         }, campingMapItemClick = {
             Toast.makeText(activity, "${it.facltNm}", Toast.LENGTH_SHORT).show()
+        }, campingDetailButtonClick = {
+            Toast.makeText(activity, "title : ${it.facltNm}", Toast.LENGTH_SHORT).show()
+            val intent = Intent(activity, DetailActivity::class.java)
+            intent.putExtra("title", "${it.facltNm}")
+            startActivity(intent)
         })
 
         RetrofitObject.apiService.getAllCampingMapItem().enqueue(object : Callback<AllCampingMap>{
             override fun onResponse(call: Call<AllCampingMap>, response: Response<AllCampingMap>) {
                 if (response.isSuccessful) {
-                    val item = response.body()?.response?.body?.items
-                    val itemList = item?.item
-                    Log.d("asdf map", "$itemList")
 
-                    itemList?.forEach {
-                        val marker = Marker()
-                        marker.position = LatLng(it.mapY!!.toDouble(), it.mapX!!.toDouble())
-                        marker.icon = Marker.DEFAULT_ICON
-                        marker.tag = it.contentId
-                        marker.map = naverMap
-                        marker.onClickListener = this@CampingMapFragment
+                    response.body()?.let {
+                        val item = response.body()?.response?.body?.items
+                        val itemList = item?.item
+
+                        //Log.d("asdf itemTestList", "$itemTestList")
+                        Log.d("asdf map", "$itemList")
+
+                        itemList?.forEach {
+                            val marker = Marker()
+                            marker.position = LatLng(it.mapY!!.toDouble(), it.mapX!!.toDouble())
+                            marker.icon = Marker.DEFAULT_ICON
+                            marker.tag = it.contentId
+                            marker.map = naverMap
+                            marker.onClickListener = this@CampingMapFragment
+
+                        }
+
+                        view?.findViewById<ViewPager2>(R.id.campingMapViewPager)?.adapter = viewPagerAdapter
+                        viewPagerAdapter.submitList(itemList)
+
+                        view?.findViewById<ViewPager2>(R.id.campingMapViewPager)?.isUserInputEnabled = false
                     }
 
-                    view?.findViewById<ViewPager2>(R.id.campingMapViewPager)?.adapter = viewPagerAdapter
-                    viewPagerAdapter.submitList(itemList)
-
-                    view?.findViewById<ViewPager2>(R.id.campingMapViewPager)?.isUserInputEnabled = false
                 }
             }
 
             override fun onFailure(call: Call<AllCampingMap>, t: Throwable) {
                 Log.d("onFailure map", "${t.message}")
+                Toast.makeText(activity, "${t.message} error가 발생했습니다. 나중에 다시 시도해주세요", Toast.LENGTH_SHORT).show()
             }
 
         })

@@ -51,7 +51,7 @@ class MainActivity : AppCompatActivity() {
         val mypageFragment = MypageFragment()
         val campingMapFragment = CampingMapFragment()
 
-        requestPermission()
+        //requestPermission()
 
         replaceFragment(campingMapFragment)
 
@@ -104,22 +104,22 @@ class MainActivity : AppCompatActivity() {
         return super.onOptionsItemSelected(item)
     }
 
-    @RequiresApi(Build.VERSION_CODES.O)
-    override fun onRequestPermissionsResult(
-        requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-
-        if (requestCode == 1000) {
-            if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                Log.d("testt main", "승낙")
-
-
-            } else {
-                Log.d("testt main", "거부")
-                finish()
-            }
-        }
-    }
+//    @RequiresApi(Build.VERSION_CODES.O)
+//    override fun onRequestPermissionsResult(
+//        requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
+//        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+//
+//        if (requestCode == 1000) {
+//            if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+//                Log.d("testt main", "승낙")
+//
+//
+//            } else {
+//                Log.d("testt main", "거부")
+//                finish()
+//            }
+//        }
+//    }
 
     private fun requestPermission() {
         ActivityCompat.requestPermissions(

@@ -1,5 +1,6 @@
 package com.example.gocampingcompany.search
 
+import android.content.Intent
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
@@ -8,6 +9,7 @@ import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.gocampingcompany.DetailActivity
 import com.example.gocampingcompany.R
 import com.example.gocampingcompany.RetrofitObject
 import com.example.gocampingcompany.databinding.FragmentSearchBinding
@@ -29,6 +31,9 @@ class SearchFragment : Fragment(R.layout.fragment_search) {
 
         searchAdapter = SearchAdapter(searchItemClick = {
             Toast.makeText(activity, "title : ${it.facltNm}", Toast.LENGTH_SHORT).show()
+            val intent = Intent(activity, DetailActivity::class.java)
+            intent.putExtra("title", "${it.facltNm}")
+            startActivity(intent)
         })
         fragmentSearchBinding.searchRecyclerView.adapter = searchAdapter
         fragmentSearchBinding.searchRecyclerView.layoutManager = LinearLayoutManager(activity)
@@ -37,14 +42,18 @@ class SearchFragment : Fragment(R.layout.fragment_search) {
             val address = fragmentSearchBinding.searchEditText.text.toString()
             //val urlAddress = URLEncoder.encode(binding.searchEditText.text.toString(), UTF_8.toString())
 
-            RetrofitObject.apiService.getItem(address).enqueue(object  : Callback<GoCamping> {
+            RetrofitObject.apiService.getItem(address).enqueue(object : Callback<GoCamping> {
                 override fun onResponse(call: Call<GoCamping>, response: Response<GoCamping>) {
                     if (response.isSuccessful) {
 
-                        val item = response.body()?.response?.body?.items
-                        val itemList = item?.item
-                        searchAdapter.submitList(itemList)
-                        Log.d("asdf", "$itemList")
+                        response.body()?.let {
+                            val response = response.body()
+                            val body = response?.response?.body
+                            val items = body?.items
+                            val itemList = items?.item
+                            searchAdapter.submitList(itemList)
+                            Log.d("asdf", "$itemList")
+                        }
                     }
                 }
 
