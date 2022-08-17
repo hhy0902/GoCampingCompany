@@ -42,7 +42,7 @@ object RetrofitObject {
             interceptor.level = HttpLoggingInterceptor.Level.NONE
         }
         return OkHttpClient.Builder()
-            .connectTimeout(10, TimeUnit.SECONDS)
+            .connectTimeout(30, TimeUnit.SECONDS)
             .addInterceptor(interceptor)
             .build()
     }

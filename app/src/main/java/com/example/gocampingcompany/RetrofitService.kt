@@ -12,16 +12,16 @@ import retrofit2.http.Query
 
 interface RetrofitService {
 
-    @GET("B551011/GoCamping/searchList?serviceKey=JCrJa4%2F4eF07FKbnkSi7BDDUvnJXCE1CTiyt%2FfnxJ%2B7jewHaXTp5hrKQzOKdWYctQB%2B3a%2FHLuUHkTPq4hqrxvA%3D%3D&numOfRows=100&pageNo=1&MobileOS=%08AND&MobileApp=GoCamping&_type=json")
+    @GET("B551011/GoCamping/searchList?serviceKey=JCrJa4%2F4eF07FKbnkSi7BDDUvnJXCE1CTiyt%2FfnxJ%2B7jewHaXTp5hrKQzOKdWYctQB%2B3a%2FHLuUHkTPq4hqrxvA%3D%3D&numOfRows=100&pageNo=1&MobileOS=%08AND&MobileApp=GoCampingApp&_type=json")
     fun getItem(
         @Query("keyword") keyword : String
     ) : Call<GoCamping>
 
-    @GET("B551011/GoCamping/basedList?serviceKey=JCrJa4%2F4eF07FKbnkSi7BDDUvnJXCE1CTiyt%2FfnxJ%2B7jewHaXTp5hrKQzOKdWYctQB%2B3a%2FHLuUHkTPq4hqrxvA%3D%3D&numOfRows=4000&pageNo=1&MobileOS=AND&MobileApp=GoCamping&_type=json")
+    @GET("B551011/GoCamping/basedList?serviceKey=JCrJa4%2F4eF07FKbnkSi7BDDUvnJXCE1CTiyt%2FfnxJ%2B7jewHaXTp5hrKQzOKdWYctQB%2B3a%2FHLuUHkTPq4hqrxvA%3D%3D&numOfRows=4000&pageNo=1&MobileOS=AND&MobileApp=GoCampingApp&_type=json")
     fun getAllCampingMapItem(
     ) : Call<AllCampingMap>
 
-    @GET("B551011/GoCamping/locationBasedList?serviceKey=JCrJa4%2F4eF07FKbnkSi7BDDUvnJXCE1CTiyt%2FfnxJ%2B7jewHaXTp5hrKQzOKdWYctQB%2B3a%2FHLuUHkTPq4hqrxvA%3D%3D&numOfRows=1000&pageNo=1&MobileOS=AND&MobileApp=AppTest&_type=json&mapX=127.1192763&mapY=37.4856201&radius=20000")
+    @GET("B551011/GoCamping/locationBasedList?serviceKey=JCrJa4%2F4eF07FKbnkSi7BDDUvnJXCE1CTiyt%2FfnxJ%2B7jewHaXTp5hrKQzOKdWYctQB%2B3a%2FHLuUHkTPq4hqrxvA%3D%3D&numOfRows=1000&pageNo=1&MobileOS=AND&MobileApp=GoCampingApp&_type=json&mapX=127.1192763&mapY=37.4856201&radius=20000")
     fun getMyLocationCamping(
         @Query("mapY") lat : String,
         @Query("mapX") lon : String

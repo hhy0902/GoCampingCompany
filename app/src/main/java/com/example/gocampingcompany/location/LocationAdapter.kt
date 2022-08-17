@@ -21,6 +21,7 @@ class LocationAdapter(val locationItemClick : (Item) -> Unit) : ListAdapter<Item
             val image = itemView.findViewById<ImageView>(R.id.imageView)
             val address = itemView.findViewById<TextView>(R.id.addressTextView)
             val tel = itemView.findViewById<TextView>(R.id.telTextView)
+
 //            val iconImage = itemView.findViewById<TextView>(R.id.iconImageView)
 
             title.text = "[${item.doNm} ${item.sigunguNm}]" + item.facltNm

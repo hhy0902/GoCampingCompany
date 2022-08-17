@@ -1,5 +1,6 @@
 package com.example.gocampingcompany
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Build
@@ -11,6 +12,7 @@ import android.view.View.GONE
 import android.view.View.VISIBLE
 import android.widget.Toast
 import androidx.annotation.RequiresApi
+import androidx.appcompat.app.ActionBar.DISPLAY_SHOW_TITLE
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.fragment.app.Fragment
@@ -41,8 +43,14 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
+
         setSupportActionBar(binding.mainToolbar)
-        supportActionBar?.setDisplayShowTitleEnabled(false)
+        supportActionBar?.title = "goCamping"
+//        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+//        supportActionBar?.setDisplayShowHomeEnabled(true)
+
+
+
 
         val searchFragment = SearchFragment()
         val locationFragment = LocationFragment()
@@ -54,8 +62,6 @@ class MainActivity : AppCompatActivity() {
         //requestPermission()
 
         replaceFragment(campingMapFragment)
-
-
 
 
         binding.bottomNavigationView.setOnItemSelectedListener {
@@ -91,6 +97,8 @@ class MainActivity : AppCompatActivity() {
         return super.onCreateOptionsMenu(menu)
     }
 
+    @SuppressLint("WrongConstant")
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when(item.itemId) {
             R.id.toolbarSearch -> {
@@ -98,38 +106,22 @@ class MainActivity : AppCompatActivity() {
                 val searchFragment = SearchFragment()
                 replaceFragment(searchFragment)
                 binding.mainToolbar.visibility = GONE
+                binding.bottomNavigationView.selectedItemId = R.id.search
+                val naviValue = binding.bottomNavigationView.selectedItemId
+                Log.d("naviValue", "${naviValue}")
+
             }
-            R.id.toolbarStar -> Toast.makeText(this, "star click", Toast.LENGTH_SHORT).show()
+            R.id.toolbarStar -> {
+                Toast.makeText(this, "star click", Toast.LENGTH_SHORT).show()
+                val starFragment = StarFragment()
+                replaceFragment(starFragment)
+            }
+//            R.id.home -> {
+//                onBackPressed()
+//                Toast.makeText(this, "back click", Toast.LENGTH_SHORT).show()
+//            }
         }
         return super.onOptionsItemSelected(item)
-    }
-
-//    @RequiresApi(Build.VERSION_CODES.O)
-//    override fun onRequestPermissionsResult(
-//        requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
-//        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-//
-//        if (requestCode == 1000) {
-//            if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-//                Log.d("testt main", "승낙")
-//
-//
-//            } else {
-//                Log.d("testt main", "거부")
-//                finish()
-//            }
-//        }
-//    }
-
-    private fun requestPermission() {
-        ActivityCompat.requestPermissions(
-            this,
-            arrayOf(
-                android.Manifest.permission.ACCESS_FINE_LOCATION,
-                android.Manifest.permission.ACCESS_COARSE_LOCATION
-            ),
-            REQUEST_ACCESS_LOCATION_PERMISSIONS
-        )
     }
 
     private fun replaceFragment(fragment : Fragment) {
@@ -139,11 +131,6 @@ class MainActivity : AppCompatActivity() {
             commit()
         }
     }
-
-    companion object {
-        private const val REQUEST_ACCESS_LOCATION_PERMISSIONS = 1000
-    }
-
 
 }
 

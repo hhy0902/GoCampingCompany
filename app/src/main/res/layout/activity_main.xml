@@ -14,13 +14,6 @@
         android:background="#E8F6FF"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
-
-        <TextView
-            android:id="@+id/toolbarSearch"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="고캠핑" />
-
     </androidx.appcompat.widget.Toolbar>
 
     <FrameLayout
@@ -40,6 +33,9 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
+        app:labelVisibilityMode="labeled"
+        android:clickable="true"
+        app:itemIconTint="@color/black"
         app:itemRippleColor="@null"
         app:menu="@menu/bottom_navigation_menu" />
 
