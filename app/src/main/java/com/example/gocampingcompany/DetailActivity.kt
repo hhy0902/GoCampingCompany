@@ -4,6 +4,7 @@ import android.content.Intent
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.widget.Toast
 import com.bumptech.glide.Glide
 import com.example.gocampingcompany.databinding.ActivityDetailBinding
@@ -30,12 +31,23 @@ class DetailActivity : AppCompatActivity() {
         val operDeCl = intent.getStringExtra("operDeCl") // 운영일
         val homepage = intent.getStringExtra("homepage")
         val intro = intent.getStringExtra("intro") // 인트로 설명
+        val sbrsCl = intent.getStringExtra("sbrsCl") // 시설정보
 
+        val sbrsClInfo = sbrsCl?.split(",")
+        val sbrsClInfoList = mutableListOf<String>()
+        sbrsClInfo?.forEach {
+            Log.d("sbrsClInfo", "${it}")
+            sbrsClInfoList.add(it)
+        }
+        sbrsClInfoList.forEach {
+            Log.d("sbrsClInfoList", "${it}")
+        }
         Glide
             .with(binding.coverImage.context)
             .load(image)
             .error(R.drawable.ic_baseline_image_not_supported_24)
             .into(binding.coverImage)
+
         binding.titleTextView.text = title.toString()
         binding.lineIntroTextView.text = lineIntro.toString()
         binding.addressTextView.text = "주소 : " + address.toString()
@@ -45,7 +57,7 @@ class DetailActivity : AppCompatActivity() {
         binding.operPdClTextView.text = "운영기간 : " + operPdCl.toString()
         binding.operDeClTextView.text = "운영일 : " + operDeCl.toString()
         binding.homepageTextView.text = "홈페이지 : "
-        binding.introTextView.text = "캠핑장 소개 : " + intro.toString()
+        binding.introTextView.text = intro.toString()
 
         try {
             binding.homepageButton.setOnClickListener {

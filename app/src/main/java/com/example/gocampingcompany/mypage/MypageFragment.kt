@@ -28,6 +28,9 @@ class MypageFragment : Fragment(R.layout.fragment_mypage) {
 
         val fragmentMypageBinding = FragmentMypageBinding.bind(view)
 
+        fragmentMypageBinding.tabLayout.addTab(fragmentMypageBinding.tabLayout.newTab().setText("tab1"))
+        fragmentMypageBinding.tabLayout.addTab(fragmentMypageBinding.tabLayout.newTab().setText("tab2"))
+
         if (auth.currentUser != null) {
             fragmentMypageBinding.emailValue.text = auth.currentUser!!.email
             fragmentMypageBinding.uidValue.text = auth.currentUser!!.uid

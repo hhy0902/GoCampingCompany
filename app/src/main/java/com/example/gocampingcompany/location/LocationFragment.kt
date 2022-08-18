@@ -63,6 +63,7 @@ class LocationFragment : Fragment(R.layout.fragment_location) {
                 putExtra("operDeCl","${it.operDeCl}")
                 putExtra("homepage", "${it.homepage}")
                 putExtra("intro","${it.intro}")
+                putExtra("sbrsCl", "${it.sbrsCl}")
             }
 
             startActivity(intent)

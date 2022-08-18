@@ -54,8 +54,9 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="15dp"
                 android:text="기본정보"
+                android:textStyle="bold"
                 android:textColor="@color/black"
-                android:textSize="20dp"
+                android:textSize="24dp"
                 app:layout_constraintStart_toStartOf="@id/coverImage"
                 app:layout_constraintTop_toBottomOf="@id/coverImage" />
 
@@ -161,7 +162,8 @@
                 android:layout_marginTop="15dp"
                 android:text="상세정보"
                 android:textColor="@color/black"
-                android:textSize="20dp"
+                android:textStyle="bold"
+                android:textSize="24dp"
                 app:layout_constraintStart_toStartOf="@id/coverImage"
                 app:layout_constraintTop_toBottomOf="@id/homepageButton" />
 
@@ -177,6 +179,19 @@
                 app:layout_constraintTop_toBottomOf="@id/detailTextView" />
 
             <TextView
+                android:id="@+id/introTitleTextView"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="5dp"
+                android:layout_marginVertical="3dp"
+                android:text="캠핑장 소개"
+                android:textStyle="bold"
+                android:textSize="18dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/detailLine" />
+
+            <TextView
                 android:id="@+id/introTextView"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -184,8 +199,21 @@
                 android:layout_marginVertical="3dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/detailLine"
+                app:layout_constraintTop_toBottomOf="@id/introTitleTextView"
                 tools:text="homepage" />
+
+            <TextView
+                android:id="@+id/sbrsClTitleTextView"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="5dp"
+                android:layout_marginVertical="3dp"
+                android:text="캠핑장 시설정보"
+                android:textStyle="bold"
+                android:textSize="18dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/introTextView" />
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>
