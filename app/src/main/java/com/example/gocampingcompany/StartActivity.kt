@@ -37,6 +37,7 @@ class StartActivity : AppCompatActivity() {
 
 
             } else {
+                Toast.makeText(this, "권한을 거부했습니다.", Toast.LENGTH_SHORT).show()
                 Log.d("testt main", "거부")
                 finish()
             }
@@ -48,7 +49,8 @@ class StartActivity : AppCompatActivity() {
             this,
             arrayOf(
                 android.Manifest.permission.ACCESS_FINE_LOCATION,
-                android.Manifest.permission.ACCESS_COARSE_LOCATION
+                android.Manifest.permission.ACCESS_COARSE_LOCATION,
+                android.Manifest.permission.READ_EXTERNAL_STORAGE
             ),
             REQUEST_ACCESS_LOCATION_PERMISSIONS
         )
