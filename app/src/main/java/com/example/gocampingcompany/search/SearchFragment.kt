@@ -35,7 +35,22 @@ class SearchFragment : Fragment(R.layout.fragment_search) {
         searchAdapter = SearchAdapter(searchItemClick = {
             Toast.makeText(activity, "title : ${it.facltNm}", Toast.LENGTH_SHORT).show()
             val intent = Intent(activity, DetailActivity::class.java)
-            intent.putExtra("title", "${it.facltNm}")
+            with(intent) {
+                putExtra("title", "${it.facltNm}")
+                putExtra("image","${it.firstImageUrl}")
+                putExtra("addr1", "${it.addr1}")
+                putExtra("lineIntro","${it.lineIntro}")
+                putExtra("tel","${it.tel}")
+                putExtra("lctCl","${it.lctCl}")
+                putExtra("facltDivNm","${it.facltDivNm}")
+                putExtra("induty", "${it.induty}")
+                putExtra("operPdCl", "${it.operPdCl}")
+                putExtra("operDeCl","${it.operDeCl}")
+                putExtra("homepage", "${it.homepage}")
+                putExtra("intro","${it.intro}")
+                putExtra("sbrsCl", "${it.sbrsCl}")
+            }
+
             startActivity(intent)
         })
         fragmentSearchBinding.searchRecyclerView.adapter = searchAdapter

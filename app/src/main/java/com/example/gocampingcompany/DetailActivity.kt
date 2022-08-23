@@ -1,5 +1,6 @@
 package com.example.gocampingcompany
 
+import android.content.ActivityNotFoundException
 import android.content.Intent
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
@@ -59,20 +60,18 @@ class DetailActivity : AppCompatActivity() {
         binding.homepageTextView.text = "홈페이지 : "
         binding.introTextView.text = intro.toString()
 
-        try {
-            binding.homepageButton.setOnClickListener {
+        binding.homepageButton.setOnClickListener {
+            try {
                 val intent = Intent(Intent.ACTION_VIEW)
                 intent.setData(Uri.parse("$homepage"))
                 startActivity(intent)
+
+            } catch (e : Exception) {
+                e.printStackTrace()
+                Toast.makeText(this, "링크가 이상합니다. 오류가 계속되면 아래 연락처로 문의하시기 바랍니다. 감사합니다. ＊TourAPI 운영팀 ＊Tel. 033-738-3874 ＊Email. tourapi@knto.or.kr", Toast.LENGTH_SHORT).show()
             }
-        } catch (e : Exception) {
-            e.printStackTrace()
-            Toast.makeText(this, "링크가 이상합니다.", Toast.LENGTH_SHORT).show()
+
         }
-
-
-
-
 
     }
 }

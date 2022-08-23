@@ -1,8 +1,10 @@
 package com.example.gocampingcompany
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
+import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -10,6 +12,7 @@ import android.widget.Button
 import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AlertDialog
 import androidx.core.content.ContextCompat
 import com.example.gocampingcompany.databinding.ActivityWritePostBinding
@@ -19,6 +22,7 @@ import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.ktx.storage
+import java.time.LocalDateTime
 
 class WritePostActivity : AppCompatActivity() {
 
@@ -32,6 +36,8 @@ class WritePostActivity : AppCompatActivity() {
     private val binding by lazy {
         ActivityWritePostBinding.inflate(layoutInflater)
     }
+
+    private val time = System.currentTimeMillis()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -47,8 +53,6 @@ class WritePostActivity : AppCompatActivity() {
                             imageFileUri = selectedImageUri
                             Log.d("photo uri =", "${selectedImageUri}")
 
-
-
                         } else {
                             Toast.makeText(this, "사진을 가져오지 못했습니다.", Toast.LENGTH_SHORT).show()
                         }
@@ -60,6 +64,7 @@ class WritePostActivity : AppCompatActivity() {
         postButton()
     }
 
+    @SuppressLint("NewApi")
     private fun postButton() {
         binding.addPostButton.setOnClickListener {
             upLoadPhoto()
@@ -67,18 +72,29 @@ class WritePostActivity : AppCompatActivity() {
         }
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
     private fun upLoadPost() {
         val title = binding.postTitleTextView.text.toString()
         val content = binding.postContentTextView.text.toString()
         val id = "${auth.currentUser?.uid}${System.currentTimeMillis()}"
+        val name = auth.currentUser?.email?.split("@")?.get(0).toString()
+//        val time = "${System.currentTimeMillis()}"
+        val uri = imageFileUri.toString()
+        val writeDate = LocalDateTime.now()
+
+        Log.d("uri", "${uri}")
 
         val post = hashMapOf(
             "title" to title,
             "content" to content,
-            "imageUri" to imageFileUri,
-            "id" to id
+            "imageUri" to uri,
+            "id" to id,
+            "name" to name,
+            "writeDate" to "${writeDate.year}-${writeDate.monthValue}-${writeDate.dayOfMonth} / ${writeDate.hour}:${writeDate.minute}:${writeDate.second}",
+            "time" to time.toString()
         )
-        db.collection("post").document("$id")
+        //db.collection("post").document("${System.currentTimeMillis()}${auth.currentUser?.uid}")
+        db.collection("post").document("${writeDate}${auth.currentUser?.uid}")
             .set(post)
             .addOnSuccessListener {
                 Log.d("succees", "success db")
@@ -92,7 +108,9 @@ class WritePostActivity : AppCompatActivity() {
     }
 
     private fun upLoadPhoto() {
-        val fileName = "${System.currentTimeMillis()}.png"
+        val name = auth.currentUser?.email?.split("@")?.get(0).toString()
+//        val time = "${System.currentTimeMillis()}"
+        val fileName = "${name}${time}.png"
         imageFileUri?.let {
             storage.reference.child("post/image").child(fileName)
                 .putFile(it)

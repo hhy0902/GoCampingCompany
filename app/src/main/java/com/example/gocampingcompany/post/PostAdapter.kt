@@ -1,6 +1,7 @@
 package com.example.gocampingcompany.post
 
 import android.net.Uri
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -22,12 +23,28 @@ class PostAdapter : ListAdapter<PostModel, PostAdapter.ViewHolder> (differ){
 
         fun bind(item : PostModel) {
 
+            val storage = Firebase.storage
+            val storageRef = storage.reference
+
             val title = itemView.findViewById<TextView>(R.id.titleTextView)
-            val content = itemView.findViewById<TextView>(R.id.contentTextView)
-            val image = itemView.findViewById<ImageView>(R.id.imageView)
+            val image = itemView.findViewById<ImageView>(R.id.postImageView)
+            val name = itemView.findViewById<TextView>(R.id.nameTextView)
+            val date = itemView.findViewById<TextView>(R.id.dateTextView)
+
+            storageRef.child("post/image").child("${item.name}${item.time}.png").downloadUrl
+                .addOnSuccessListener {
+                    Glide.with(image.context)
+                        .load(it)
+                        .into(image)
+                }
+                .addOnFailureListener {
+                    Log.d("post/image", "${item.name}${item.time}")
+                    Log.d("error","${it.message}")
+                }
 
             title.text = item.title
-            content.text = item.content
+            name.text = item.name
+            date.text = item.writeDate
 
 
         }

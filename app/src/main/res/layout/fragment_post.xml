@@ -18,12 +18,8 @@
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/postRecyclerView"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_marginBottom="10dp"
-            app:layout_constraintBottom_toTopOf="@id/goWritePostButton"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp" />
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton

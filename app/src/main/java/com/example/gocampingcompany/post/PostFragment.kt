@@ -13,6 +13,7 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
+import androidx.core.net.toUri
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
@@ -44,7 +45,8 @@ class PostFragment : Fragment(R.layout.fragment_post) {
         }
 
         postAdapter = PostAdapter()
-        fragmentPostBinding.postRecyclerView.layoutManager = LinearLayoutManager(activity)
+        fragmentPostBinding.postRecyclerView.layoutManager = LinearLayoutManager(activity, LinearLayoutManager.VERTICAL, true)
+
         fragmentPostBinding.postRecyclerView.adapter = postAdapter
 
         getPostList()
@@ -78,7 +80,10 @@ class PostFragment : Fragment(R.layout.fragment_post) {
                     postList.add(PostModel(
                             "${document.get("title")}", "${document.get("content")}",
                             "${document.get("imageUrl")}",
-                            "${document.get("id")}"))
+                            "${document.get("id")}",
+                    "${document.get("name")}",
+                    "${document.get("writeDate")}",
+                    "${document.get("time")}"))
                     postAdapter.submitList(postList)
                     view?.findViewById<SwipeRefreshLayout>(R.id.postSwipeLayout)?.isRefreshing = false
                 }
