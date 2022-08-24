@@ -34,6 +34,26 @@ class DetailActivity : AppCompatActivity() {
         val intro = intent.getStringExtra("intro") // 인트로 설명
         val sbrsCl = intent.getStringExtra("sbrsCl") // 시설정보
 
+        val glampInnerFclty = intent.getStringExtra("glampInnerFclty") // 내부시설
+
+        val brazierCl = intent.getStringExtra("brazierCl") // 화로대
+
+        val extshrCo = intent.getStringExtra("extshrCo") // 소화기
+        val frprvtWrppCo = intent.getStringExtra("frprvtWrppCo") // 방화수
+        val frprvtSandCo = intent.getStringExtra("frprvtSandCo") // 방화사
+        val fireSensorCo = intent.getStringExtra("fireSensorCo") // 화재감지기
+
+        val animalCmgCl = intent.getStringExtra("animalCmgCl") // 반려동물 여부
+
+        val bottomStringBuffer = StringBuffer()
+
+        val siteBottomCl1 = intent.getStringExtra("siteBottomCl1") // 잔디
+        val siteBottomCl2 = intent.getStringExtra("siteBottomCl2") // 파쇄석
+        val siteBottomCl3 = intent.getStringExtra("siteBottomCl3") // 테크
+        val siteBottomCl4 = intent.getStringExtra("siteBottomCl4") // 자갈
+        val siteBottomCl5 = intent.getStringExtra("siteBottomCl5") // 맨흙
+
+
         val sbrsClInfo = sbrsCl?.split(",")
         val sbrsClInfoList = mutableListOf<String>()
         sbrsClInfo?.forEach {
@@ -58,7 +78,14 @@ class DetailActivity : AppCompatActivity() {
         binding.operPdClTextView.text = "운영기간 : " + operPdCl.toString()
         binding.operDeClTextView.text = "운영일 : " + operDeCl.toString()
         binding.homepageTextView.text = "홈페이지 : "
-        binding.introTextView.text = intro.toString()
+        Log.d("asdf intro","${intro}")
+        if (intro?.length == 0) {
+            Log.d("asdf intro length","${intro.length}")
+            binding.introTextView.text = "소개글이 없습니다."
+        } else {
+            binding.introTextView.text = intro.toString()
+        }
+        binding.sbrsClTextView.text = sbrsCl
 
         binding.homepageButton.setOnClickListener {
             try {

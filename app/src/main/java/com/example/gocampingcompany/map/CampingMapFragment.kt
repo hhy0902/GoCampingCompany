@@ -95,6 +95,20 @@ class CampingMapFragment : Fragment(R.layout.fragment_campingmap), OnMapReadyCal
                 putExtra("homepage", "${it.homepage}")
                 putExtra("intro","${it.intro}")
                 putExtra("sbrsCl", "${it.sbrsCl}")
+                putExtra("glampInnerFclty","${it.glampInnerFclty}")
+                putExtra("brazierCl","${it.brazierCl}")
+                putExtra("extshrCo","${it.extshrCo}")
+                putExtra("frprvtWrppCo","${it.frprvtWrppCo}")
+                putExtra("frprvtSandCo","${it.frprvtSandCo}")
+                putExtra("fireSensorCo","${it.fireSensorCo}")
+                putExtra("animalCmgCl","${it.animalCmgCl}")
+                putExtra("siteBottomCl1","${it.siteBottomCl1}")
+                putExtra("siteBottomCl2","${it.siteBottomCl2}")
+                putExtra("siteBottomCl3","${it.siteBottomCl3}")
+                putExtra("siteBottomCl4","${it.siteBottomCl4}")
+                putExtra("siteBottomCl5","${it.siteBottomCl5}")
+
+
             }
 
             startActivity(intent)
