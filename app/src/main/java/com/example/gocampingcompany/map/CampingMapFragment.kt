@@ -63,6 +63,8 @@ class CampingMapFragment : Fragment(R.layout.fragment_campingmap), OnMapReadyCal
 
         naverMap.mapType = NaverMap.MapType.Navi
 
+        Log.d("map on","map fragment")
+
         val uiSettings = naverMap.uiSettings
         uiSettings.isLocationButtonEnabled = false
         uiSettings.logoGravity = Gravity.START

@@ -8,6 +8,8 @@ import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.View.GONE
+import android.view.View.VISIBLE
 import android.widget.Button
 import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
@@ -51,7 +53,8 @@ class WritePostActivity : AppCompatActivity() {
                         if (selectedImageUri != null) {
                             binding.imageView11.setImageURI(selectedImageUri)
                             imageFileUri = selectedImageUri
-                            Log.d("photo uri =", "${selectedImageUri}")
+                            Log.d("photo uri =", "${imageFileUri}")
+                            //upLoadPhoto()
 
                         } else {
                             Toast.makeText(this, "사진을 가져오지 못했습니다.", Toast.LENGTH_SHORT).show()
@@ -67,6 +70,7 @@ class WritePostActivity : AppCompatActivity() {
     @SuppressLint("NewApi")
     private fun postButton() {
         binding.addPostButton.setOnClickListener {
+            binding.progressBar.visibility = VISIBLE
             upLoadPhoto()
             upLoadPost()
         }
@@ -76,11 +80,12 @@ class WritePostActivity : AppCompatActivity() {
     private fun upLoadPost() {
         val title = binding.postTitleTextView.text.toString()
         val content = binding.postContentTextView.text.toString()
-        val id = "${auth.currentUser?.uid}${System.currentTimeMillis()}"
+        val id = "${auth.currentUser?.uid}"
         val name = auth.currentUser?.email?.split("@")?.get(0).toString()
 //        val time = "${System.currentTimeMillis()}"
         val uri = imageFileUri.toString()
         val writeDate = LocalDateTime.now()
+        val email = auth.currentUser?.email
 
         Log.d("uri", "${uri}")
 
@@ -90,8 +95,9 @@ class WritePostActivity : AppCompatActivity() {
             "imageUri" to uri,
             "id" to id,
             "name" to name,
-            "writeDate" to "${writeDate.year}-${writeDate.monthValue}-${writeDate.dayOfMonth} / ${writeDate.hour}:${writeDate.minute}:${writeDate.second}",
-            "time" to time.toString()
+            "writeDate" to "${writeDate}",
+            "time" to time.toString(),
+            "email" to email
         )
         //db.collection("post").document("${System.currentTimeMillis()}${auth.currentUser?.uid}")
         db.collection("post").document("${writeDate}${auth.currentUser?.uid}")
@@ -100,6 +106,7 @@ class WritePostActivity : AppCompatActivity() {
                 Log.d("succees", "success db")
                 Toast.makeText(this, "post 성공", Toast.LENGTH_SHORT).show()
                 finish()
+
             }
             .addOnFailureListener {
                 Log.d("faild", "faild db")
@@ -117,6 +124,14 @@ class WritePostActivity : AppCompatActivity() {
                 .addOnSuccessListener {
                     Log.d("upload", "성공")
                     Toast.makeText(this, "upload 성공", Toast.LENGTH_SHORT).show()
+
+
+                }
+                .addOnFailureListener {
+                    Log.d("photo upload", "fail")
+                    Toast.makeText(this, "photo upload fail", Toast.LENGTH_SHORT).show()
+
+
                 }
         }
 

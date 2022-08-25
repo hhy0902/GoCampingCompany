@@ -7,6 +7,7 @@ import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import retrofit2.create
 import java.util.concurrent.TimeUnit
 
 object RetrofitObject {
@@ -15,12 +16,9 @@ object RetrofitObject {
         getRetrofit().create(RetrofitService::class.java)
     }
 
-
     val test123  = "https://apis.data.go.kr/B551011/GoCamping/searchList?serviceKey=JCrJa4%2F4eF07FKbnkSi7BDDUvnJXCE1CTiyt%2FfnxJ%2B7jewHaXTp5hrKQzOKdWYctQB%2B3a%2FHLuUHkTPq4hqrxvA%3D%3D&numOfRows=10&pageNo=1&MobileOS=%08AND&MobileApp=AppTest&_type=json&keyword=%EB%B6%80%EC%82%B0"
     val qwer = "https://run.mocky.io/v3/c3e88fdb-18f1-4a80-b546-be68720859db"
     val all = "http://apis.data.go.kr/B551011/GoCamping/basedList?serviceKey=JCrJa4%2F4eF07FKbnkSi7BDDUvnJXCE1CTiyt%2FfnxJ%2B7jewHaXTp5hrKQzOKdWYctQB%2B3a%2FHLuUHkTPq4hqrxvA%3D%3D&numOfRows=10000&pageNo=1&MobileOS=AND&MobileApp=AppTest&_type=json"
-
-
 
     private fun getRetrofit() : Retrofit {
         val gson : Gson = GsonBuilder()

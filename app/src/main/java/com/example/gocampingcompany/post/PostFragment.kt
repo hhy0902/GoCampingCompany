@@ -1,5 +1,6 @@
 package com.example.gocampingcompany.post
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
@@ -20,20 +21,25 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.example.gocampingcompany.R
 import com.example.gocampingcompany.WritePostActivity
 import com.example.gocampingcompany.databinding.FragmentPostBinding
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.ktx.storage
+import java.time.LocalDateTime
 
 class PostFragment : Fragment(R.layout.fragment_post) {
 
     val storage = Firebase.storage
     lateinit var imageFileUri : Uri
     private val db = Firebase.firestore
+    private val auth : FirebaseAuth = Firebase.auth
 
     private lateinit var postAdapter: PostAdapter
 
 
 
+    @SuppressLint("NewApi")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -44,7 +50,28 @@ class PostFragment : Fragment(R.layout.fragment_post) {
             startActivity(intent)
         }
 
-        postAdapter = PostAdapter()
+        postAdapter = PostAdapter(deleteButtonClick = {
+            Toast.makeText(activity,"delete click",Toast.LENGTH_SHORT).show()
+
+            val writeDate = it.writeDate
+            val uid = it.id
+
+            db.collection("post").document("${writeDate}${uid}")
+                .delete()
+                .addOnSuccessListener {
+                    Log.d("success", "DocumentSnapshot successfully deleted!")
+                    Toast.makeText(activity,"DocumentSnapshot successfully deleted!",Toast.LENGTH_SHORT).show()
+                    getPostList()
+
+                }
+                .addOnFailureListener { e ->
+                    Log.w("fail", "Error deleting document", e)
+                    Toast.makeText(activity,"Error deleting document",Toast.LENGTH_SHORT).show()
+                }
+
+        }, updateButtonClick = {
+            Toast.makeText(activity,"update ${it.title} click",Toast.LENGTH_SHORT).show()
+        })
         fragmentPostBinding.postRecyclerView.layoutManager = LinearLayoutManager(activity, LinearLayoutManager.VERTICAL, true)
 
         fragmentPostBinding.postRecyclerView.adapter = postAdapter
@@ -59,7 +86,7 @@ class PostFragment : Fragment(R.layout.fragment_post) {
         view?.findViewById<SwipeRefreshLayout>(R.id.postSwipeLayout)?.setOnRefreshListener {
             Log.d("asdf refresh","refresh")
             getPostList()
-
+            view?.findViewById<SwipeRefreshLayout>(R.id.postSwipeLayout)?.isRefreshing = false
         }
     }
 
@@ -73,10 +100,6 @@ class PostFragment : Fragment(R.layout.fragment_post) {
             .get()
             .addOnSuccessListener { result ->
                 for (document in result) {
-//                    Log.d("TAG", "${document.id} => ${document.data}")
-                    Log.d("TAG", "${document.get("title")}")
-                    Log.d("TAG", "${document.get("imageUrl")}")
-
                     postList.add(PostModel(
                             "${document.get("title")}", "${document.get("content")}",
                             "${document.get("imageUrl")}",
