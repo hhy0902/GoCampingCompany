@@ -84,7 +84,11 @@ class WritePostActivity : AppCompatActivity() {
         val name = auth.currentUser?.email?.split("@")?.get(0).toString()
 //        val time = "${System.currentTimeMillis()}"
         val uri = imageFileUri.toString()
-        val writeDate = LocalDateTime.now()
+        val year = LocalDateTime.now().year
+        val month = LocalDateTime.now().monthValue
+        val day = LocalDateTime.now().dayOfMonth
+        val writeDate = "${year}${month}${day}"
+        val writeDateDetail = LocalDateTime.now().toString()
         val email = auth.currentUser?.email
 
         Log.d("uri", "${uri}")
@@ -97,10 +101,11 @@ class WritePostActivity : AppCompatActivity() {
             "name" to name,
             "writeDate" to "${writeDate}",
             "time" to time.toString(),
-            "email" to email
+            "email" to email,
+            "writeDateDetail" to writeDateDetail
         )
         //db.collection("post").document("${System.currentTimeMillis()}${auth.currentUser?.uid}")
-        db.collection("post").document("${writeDate}${auth.currentUser?.uid}")
+        db.collection("post").document("${writeDateDetail}${auth.currentUser?.uid}")
             .set(post)
             .addOnSuccessListener {
                 Log.d("succees", "success db")
@@ -114,10 +119,24 @@ class WritePostActivity : AppCompatActivity() {
 
     }
 
+    @SuppressLint("NewApi")
     private fun upLoadPhoto() {
+        val title = binding.postTitleTextView.text.toString()
+        val content = binding.postContentTextView.text.toString()
+        val id = "${auth.currentUser?.uid}"
         val name = auth.currentUser?.email?.split("@")?.get(0).toString()
 //        val time = "${System.currentTimeMillis()}"
-        val fileName = "${name}${time}.png"
+        val uri = imageFileUri.toString()
+        val year = LocalDateTime.now().year
+        val month = LocalDateTime.now().monthValue
+        val day = LocalDateTime.now().dayOfMonth
+        val writeDate = "${year}${month}${day}"
+
+        val day2 = LocalDateTime.now().dayOfYear
+        val email = auth.currentUser?.email
+
+        val fileName = "${writeDate}${title}${content}${email}${name}.png"
+
         imageFileUri?.let {
             storage.reference.child("post/image").child(fileName)
                 .putFile(it)

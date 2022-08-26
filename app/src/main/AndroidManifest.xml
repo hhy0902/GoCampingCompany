@@ -16,6 +16,9 @@
         android:theme="@style/Theme.GoCampingCompany"
         android:usesCleartextTraffic="true">
         <activity
+            android:name=".PostDetailActivity"
+            android:exported="true" />
+        <activity
             android:name=".WritePostActivity"
             android:exported="true" />
         <activity

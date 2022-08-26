@@ -4,8 +4,7 @@ import android.net.Uri
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
-import android.view.View.GONE
-import android.view.View.VISIBLE
+import android.view.View.*
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.ImageView
@@ -23,6 +22,7 @@ import com.google.firebase.storage.ktx.storage
 import java.net.URI
 
 class PostAdapter(
+    val itemClick : (PostModel) -> Unit,
     val deleteButtonClick : (PostModel) -> Unit,
     val updateButtonClick : (PostModel) -> Unit) : ListAdapter<PostModel, PostAdapter.ViewHolder> (differ){
 
@@ -49,18 +49,19 @@ class PostAdapter(
                 update.visibility = GONE
             }
 
+            itemView.setOnClickListener {
+                itemClick(item)
+            }
 
-            storageRef.child("post/image").child("${item.name}${item.time}.png").downloadUrl
-                .addOnSuccessListener {
-                    Glide.with(image.context)
-                        .load(it)
-                        .into(image)
-                }
-                .addOnFailureListener {
-                    Log.d("post/image", "${item.name}${item.time}")
-                    Log.d("error","${it.message}")
-
-                }
+//            storageRef.child("post/image").child("${item.writeDate}${item.title}${item.content}${item.email}${item.name}.png").downloadUrl
+//                .addOnSuccessListener {
+//                    Glide.with(image.context)
+//                        .load(it)
+//                        .into(image)
+//                }
+//                .addOnFailureListener {
+//                    //image.visibility = INVISIBLE
+//                }
 
             title.text = item.title
             name.text = item.name
@@ -73,12 +74,14 @@ class PostAdapter(
                 updateButtonClick(item)
                 Log.d("asdf time", "${item.time}")
                 Log.d("asdf url", "${item.imageUrl}")
-                storageRef.child("post/image").child("${item.name}${item.time}.png").downloadUrl
+                storageRef.child("post/image").child("${item.writeDate}${item.title}${item.content}${item.email}${item.name}.png").downloadUrl
                     .addOnSuccessListener {
                         Log.d("asdf time", "${it}")
+                    }.addOnFailureListener {
+                        Log.d("asdf error time", "${it.message}")
+                        Log.d("asdf error", "오류남")
                     }
             }
-
 
         }
 

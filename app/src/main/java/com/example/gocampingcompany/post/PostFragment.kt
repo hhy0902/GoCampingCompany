@@ -18,6 +18,8 @@ import androidx.core.net.toUri
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+import com.example.gocampingcompany.DetailActivity
+import com.example.gocampingcompany.PostDetailActivity
 import com.example.gocampingcompany.R
 import com.example.gocampingcompany.WritePostActivity
 import com.example.gocampingcompany.databinding.FragmentPostBinding
@@ -50,28 +52,44 @@ class PostFragment : Fragment(R.layout.fragment_post) {
             startActivity(intent)
         }
 
-        postAdapter = PostAdapter(deleteButtonClick = {
-            Toast.makeText(activity,"delete click",Toast.LENGTH_SHORT).show()
+        postAdapter = PostAdapter(itemClick = {
+            Toast.makeText(activity, "title : ${it.title}", Toast.LENGTH_SHORT).show()
+            val intent = Intent(activity, PostDetailActivity::class.java)
+            with(intent) {
+                putExtra("title","${it.title}")
+                putExtra("writeDate","${it.writeDate}")
+                putExtra("content","${it.content}")
+                putExtra("email","${it.email}")
+                putExtra("name","${it.name}")
+            }
 
-            val writeDate = it.writeDate
-            val uid = it.id
+            startActivity(intent)
 
-            db.collection("post").document("${writeDate}${uid}")
-                .delete()
-                .addOnSuccessListener {
+            }, deleteButtonClick = {
+                Toast.makeText(activity, "delete click", Toast.LENGTH_SHORT).show()
+
+                val writeDate = it.writeDate
+                val writeDateDetail = it.writeDateDetail
+                val uid = it.id
+
+                db.collection("post").document("${writeDateDetail}${uid}")
+                    .delete()
+                    .addOnSuccessListener {
                     Log.d("success", "DocumentSnapshot successfully deleted!")
                     Toast.makeText(activity,"DocumentSnapshot successfully deleted!",Toast.LENGTH_SHORT).show()
-                    getPostList()
+                        getPostList()
 
-                }
-                .addOnFailureListener { e ->
-                    Log.w("fail", "Error deleting document", e)
-                    Toast.makeText(activity,"Error deleting document",Toast.LENGTH_SHORT).show()
-                }
+                    }
+                    .addOnFailureListener { e ->
+                        Log.w("fail", "Error deleting document", e)
+                        Toast.makeText(activity, "Error deleting document", Toast.LENGTH_SHORT)
+                            .show()
+                    }
 
-        }, updateButtonClick = {
-            Toast.makeText(activity,"update ${it.title} click",Toast.LENGTH_SHORT).show()
-        })
+            }, updateButtonClick = {
+                Toast.makeText(activity, "update ${it.title} click", Toast.LENGTH_SHORT).show()
+            })
+
         fragmentPostBinding.postRecyclerView.layoutManager = LinearLayoutManager(activity, LinearLayoutManager.VERTICAL, true)
 
         fragmentPostBinding.postRecyclerView.adapter = postAdapter
@@ -87,6 +105,7 @@ class PostFragment : Fragment(R.layout.fragment_post) {
             Log.d("asdf refresh","refresh")
             getPostList()
             view?.findViewById<SwipeRefreshLayout>(R.id.postSwipeLayout)?.isRefreshing = false
+
         }
     }
 
@@ -106,13 +125,16 @@ class PostFragment : Fragment(R.layout.fragment_post) {
                             "${document.get("id")}",
                     "${document.get("name")}",
                     "${document.get("writeDate")}",
-                    "${document.get("time")}"))
+                    "${document.get("time")}",
+                    "${document.get("email")}",
+                    "${document.get("writeDateDetail")}"))
                     postAdapter.submitList(postList)
                     view?.findViewById<SwipeRefreshLayout>(R.id.postSwipeLayout)?.isRefreshing = false
                 }
             }
             .addOnFailureListener { exception ->
                 Log.d("TAG", "Error getting documents: ", exception)
+                view?.findViewById<SwipeRefreshLayout>(R.id.postSwipeLayout)?.isRefreshing = false
             }
 
     }

@@ -9,5 +9,7 @@ data class PostModel(
     val id : String,
     val name : String,
     val writeDate : String,
-    val time : String
+    val time : String,
+    val email : String,
+    val writeDateDetail : String
 )
