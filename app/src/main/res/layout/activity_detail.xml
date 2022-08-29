@@ -7,7 +7,7 @@
     tools:context=".DetailActivity">
 
     <ScrollView
-
+        android:id="@+id/scrollView"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
@@ -54,9 +54,9 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="15dp"
                 android:text="기본정보"
-                android:textStyle="bold"
                 android:textColor="@color/black"
                 android:textSize="24dp"
+                android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="@id/coverImage"
                 app:layout_constraintTop_toBottomOf="@id/coverImage" />
 
@@ -162,8 +162,8 @@
                 android:layout_marginTop="15dp"
                 android:text="상세정보"
                 android:textColor="@color/black"
-                android:textStyle="bold"
                 android:textSize="24dp"
+                android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="@id/coverImage"
                 app:layout_constraintTop_toBottomOf="@id/homepageButton" />
 
@@ -185,8 +185,8 @@
                 android:layout_marginHorizontal="5dp"
                 android:layout_marginVertical="3dp"
                 android:text="캠핑장 소개"
-                android:textStyle="bold"
                 android:textSize="18dp"
+                android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/detailLine" />
@@ -220,8 +220,8 @@
                 android:layout_marginHorizontal="5dp"
                 android:layout_marginVertical="3dp"
                 android:text="캠핑장 시설정보"
-                android:textStyle="bold"
                 android:textSize="18dp"
+                android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/detailLine2" />
@@ -232,10 +232,10 @@
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="5dp"
                 android:layout_marginVertical="3dp"
-                tools:text="sbrsClTextView"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/sbrsClTitleTextView" />
+                app:layout_constraintTop_toBottomOf="@id/sbrsClTitleTextView"
+                tools:text="sbrsClTextView" />
 
             <View
                 android:id="@+id/detailLine3"
@@ -255,8 +255,8 @@
                 android:layout_marginHorizontal="5dp"
                 android:layout_marginVertical="3dp"
                 android:text="기타 주요시설"
-                android:textStyle="bold"
                 android:textSize="18dp"
+                android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/detailLine3" />
@@ -268,8 +268,9 @@
                 android:layout_marginHorizontal="5dp"
                 android:layout_marginVertical="3dp"
                 android:text="주요시설"
-                android:textStyle="bold"
                 android:textSize="15dp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="@id/Line1"
                 app:layout_constraintEnd_toStartOf="@id/facilityTextView"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/etcTitleTextView" />
@@ -280,11 +281,23 @@
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="5dp"
                 android:layout_marginVertical="3dp"
+                android:textSize="15dp"
                 android:textStyle="bold"
-                android:textSize="18dp"
+                app:layout_constraintBottom_toBottomOf="@id/Line1"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@id/facilityText"
                 app:layout_constraintTop_toBottomOf="@id/etcTitleTextView" />
+
+            <View
+                android:id="@+id/Line1"
+                android:layout_width="0dp"
+                android:layout_height="1dp"
+                android:layout_marginHorizontal="5dp"
+                android:layout_marginVertical="3dp"
+                android:background="#A8A8A8"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/facilityTextView" />
 
             <TextView
                 android:id="@+id/etcInfoText"
@@ -293,11 +306,12 @@
                 android:layout_marginHorizontal="5dp"
                 android:layout_marginVertical="3dp"
                 android:text="기타 정보"
-                android:textStyle="bold"
                 android:textSize="15dp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="@id/Line2"
                 app:layout_constraintEnd_toStartOf="@id/etcInfoTextView"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/facilityText" />
+                app:layout_constraintTop_toBottomOf="@id/Line1" />
 
             <TextView
                 android:id="@+id/etcInfoTextView"
@@ -305,11 +319,23 @@
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="5dp"
                 android:layout_marginVertical="3dp"
+                android:textSize="15dp"
                 android:textStyle="bold"
-                android:textSize="18dp"
+                app:layout_constraintBottom_toBottomOf="@id/Line2"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@id/etcInfoText"
-                app:layout_constraintTop_toBottomOf="@id/facilityText" />
+                app:layout_constraintTop_toBottomOf="@id/Line1" />
+
+            <View
+                android:id="@+id/Line2"
+                android:layout_width="0dp"
+                android:layout_height="1dp"
+                android:layout_marginHorizontal="5dp"
+                android:layout_marginVertical="3dp"
+                android:background="#A8A8A8"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/etcInfoTextView" />
 
             <TextView
                 android:id="@+id/floorText"
@@ -318,11 +344,12 @@
                 android:layout_marginHorizontal="5dp"
                 android:layout_marginVertical="3dp"
                 android:text="바닥형태 (단위:면)"
-                android:textStyle="bold"
                 android:textSize="15dp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="@id/Line3"
                 app:layout_constraintEnd_toStartOf="@id/floorTextView"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/etcInfoText" />
+                app:layout_constraintTop_toBottomOf="@id/Line2" />
 
             <TextView
                 android:id="@+id/floorTextView"
@@ -330,11 +357,24 @@
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="5dp"
                 android:layout_marginVertical="3dp"
+                android:text="파쇄석 (18)"
+                android:textSize="15dp"
                 android:textStyle="bold"
-                android:textSize="18dp"
+                app:layout_constraintBottom_toBottomOf="@id/Line3"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@id/floorText"
-                app:layout_constraintTop_toBottomOf="@id/etcInfoText" />
+                app:layout_constraintTop_toBottomOf="@id/Line2" />
+
+            <View
+                android:id="@+id/Line3"
+                android:layout_width="0dp"
+                android:layout_height="1dp"
+                android:layout_marginHorizontal="5dp"
+                android:layout_marginVertical="3dp"
+                android:background="#A8A8A8"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/floorTextView" />
 
             <TextView
                 android:id="@+id/internalText"
@@ -343,11 +383,12 @@
                 android:layout_marginHorizontal="5dp"
                 android:layout_marginVertical="3dp"
                 android:text="글램핑 내부시설"
-                android:textStyle="bold"
                 android:textSize="15dp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="@id/Line4"
                 app:layout_constraintEnd_toStartOf="@id/internalTextView"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/floorText" />
+                app:layout_constraintTop_toBottomOf="@id/Line3" />
 
             <TextView
                 android:id="@+id/internalTextView"
@@ -355,11 +396,23 @@
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="5dp"
                 android:layout_marginVertical="3dp"
+                android:textSize="15dp"
                 android:textStyle="bold"
-                android:textSize="18dp"
+                app:layout_constraintBottom_toBottomOf="@id/Line4"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@id/internalText"
-                app:layout_constraintTop_toBottomOf="@id/floorText" />
+                app:layout_constraintTop_toBottomOf="@id/Line3" />
+
+            <View
+                android:id="@+id/Line4"
+                android:layout_width="0dp"
+                android:layout_height="1dp"
+                android:layout_marginHorizontal="5dp"
+                android:layout_marginVertical="3dp"
+                android:background="#A8A8A8"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/internalTextView" />
 
             <TextView
                 android:id="@+id/fireText"
@@ -368,11 +421,12 @@
                 android:layout_marginHorizontal="5dp"
                 android:layout_marginVertical="3dp"
                 android:text="화로대"
-                android:textStyle="bold"
                 android:textSize="15dp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="@id/Line5"
                 app:layout_constraintEnd_toStartOf="@id/fireTextView"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/internalText" />
+                app:layout_constraintTop_toBottomOf="@id/Line4" />
 
             <TextView
                 android:id="@+id/fireTextView"
@@ -380,11 +434,23 @@
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="5dp"
                 android:layout_marginVertical="3dp"
+                android:textSize="15dp"
                 android:textStyle="bold"
-                android:textSize="18dp"
+                app:layout_constraintBottom_toBottomOf="@id/Line5"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@id/fireText"
-                app:layout_constraintTop_toBottomOf="@id/internalText" />
+                app:layout_constraintTop_toBottomOf="@id/Line4" />
+
+            <View
+                android:id="@+id/Line5"
+                android:layout_width="0dp"
+                android:layout_height="1dp"
+                android:layout_marginHorizontal="5dp"
+                android:layout_marginVertical="3dp"
+                android:background="#A8A8A8"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/fireTextView" />
 
             <TextView
                 android:id="@+id/safeText"
@@ -393,11 +459,11 @@
                 android:layout_marginHorizontal="5dp"
                 android:layout_marginVertical="3dp"
                 android:text="안전시설현황"
-                android:textStyle="bold"
                 android:textSize="15dp"
+                android:textStyle="bold"
                 app:layout_constraintEnd_toStartOf="@id/safeTextView"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/fireText" />
+                app:layout_constraintTop_toBottomOf="@id/Line5" />
 
             <TextView
                 android:id="@+id/safeTextView"
@@ -405,11 +471,44 @@
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="5dp"
                 android:layout_marginVertical="3dp"
+                android:textSize="15dp"
                 android:textStyle="bold"
-                android:textSize="18dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@id/safeText"
-                app:layout_constraintTop_toBottomOf="@id/fireText" />
+                app:layout_constraintTop_toBottomOf="@id/Line5" />
+
+            <TextView
+                android:id="@+id/locationText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:text="위치정보"
+                android:textColor="@color/black"
+                android:textSize="24dp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="@id/coverImage"
+                app:layout_constraintTop_toBottomOf="@id/safeTextView" />
+
+            <View
+                android:id="@+id/detailLine4"
+                android:layout_width="0dp"
+                android:layout_height="1dp"
+                android:layout_marginHorizontal="5dp"
+                android:layout_marginVertical="3dp"
+                android:background="@color/black"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/locationText" />
+
+            <fragment
+                android:id="@+id/map"
+                android:layout_width="match_parent"
+                android:layout_height="500dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/detailLine4"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:name="com.naver.maps.map.MapFragment" />
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>

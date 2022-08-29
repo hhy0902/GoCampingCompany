@@ -109,6 +109,11 @@ class CampingMapFragment : Fragment(R.layout.fragment_campingmap), OnMapReadyCal
                 putExtra("siteBottomCl3","${it.siteBottomCl3}")
                 putExtra("siteBottomCl4","${it.siteBottomCl4}")
                 putExtra("siteBottomCl5","${it.siteBottomCl5}")
+                putExtra("gnrlSiteCo","${it.gnrlSiteCo}")
+                putExtra("glampSiteCo","${it.glampSiteCo}")
+                putExtra("mapX","${it.mapX}")
+                putExtra("mapY","${it.mapY}")
+
 
 
             }

@@ -7,14 +7,24 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
+import androidx.fragment.app.FragmentManager
 import com.bumptech.glide.Glide
 import com.example.gocampingcompany.databinding.ActivityDetailBinding
+import com.example.gocampingcompany.map.CampingMapFragment
+import com.naver.maps.geometry.LatLng
+import com.naver.maps.map.*
+import com.naver.maps.map.overlay.InfoWindow
+import com.naver.maps.map.overlay.Marker
+import com.naver.maps.map.util.FusedLocationSource
 
-class DetailActivity : AppCompatActivity() {
+class DetailActivity : AppCompatActivity(), OnMapReadyCallback {
 
     private val binding by lazy {
         ActivityDetailBinding.inflate(layoutInflater)
     }
+
+    private lateinit var locationSource: FusedLocationSource
+    private lateinit var naverMap: NaverMap
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -34,7 +44,10 @@ class DetailActivity : AppCompatActivity() {
         val intro = intent.getStringExtra("intro") // 인트로 설명
         val sbrsCl = intent.getStringExtra("sbrsCl") // 시설정보
 
-        val glampInnerFclty = intent.getStringExtra("glampInnerFclty") // 내부시설
+        val gnrlSiteCo = intent.getStringExtra("gnrlSiteCo") // 일반야영장
+        val glampSiteCo = intent.getStringExtra("glampSiteCo") // 글램핑시설
+
+       val glampInnerFclty = intent.getStringExtra("glampInnerFclty") // 내부시설
 
         val brazierCl = intent.getStringExtra("brazierCl") // 화로대
 
@@ -87,6 +100,12 @@ class DetailActivity : AppCompatActivity() {
         }
         binding.sbrsClTextView.text = sbrsCl
 
+        binding.facilityTextView.text = "일반야영장 : ${gnrlSiteCo} • 글램핑시설 : ${glampSiteCo}"
+        binding.etcInfoTextView.text = "반려동물 동반 ${animalCmgCl}"
+        binding.internalTextView.text = "${glampInnerFclty}"
+        binding.fireTextView.text = "${brazierCl}"
+        binding.safeTextView.text = "소화기 (${extshrCo}), 방화수 (${frprvtWrppCo}), 방화사 (${frprvtSandCo}), 화재감지기 (${fireSensorCo})"
+
         binding.homepageButton.setOnClickListener {
             try {
                 val intent = Intent(Intent.ACTION_VIEW)
@@ -100,6 +119,52 @@ class DetailActivity : AppCompatActivity() {
 
         }
 
+        locationSource = FusedLocationSource(this, LOCATION_PERMISSION_REQUEST_CODE)
+
+        val fm = supportFragmentManager
+        val mapFragment = fm.findFragmentById(R.id.map) as MapFragment?
+            ?: MapFragment.newInstance().also {
+                fm.beginTransaction().add(R.id.map, it).commit()
+            }
+
+        mapFragment.getMapAsync(this)
+
+    }
+
+    override fun onMapReady(naverMap: NaverMap) {
+        this.naverMap = naverMap
+
+        val uiSettings = naverMap.uiSettings
+        naverMap.locationSource = locationSource
+
+        uiSettings.isLocationButtonEnabled = true
+        naverMap.locationTrackingMode = LocationTrackingMode.NoFollow
+        naverMap.mapType = NaverMap.MapType.Navi
+
+        val lat = intent.getStringExtra("mapY")!!.toDouble()
+        val lon = intent.getStringExtra("mapX")!!.toDouble()
+        val title = intent.getStringExtra("title")
+
+        val marker = Marker()
+        marker.position = LatLng(lat, lon)
+        marker.map = naverMap
+
+        val infoWindow = InfoWindow()
+        infoWindow.adapter = object : InfoWindow.DefaultTextAdapter(this) {
+            override fun getText(infoWindow: InfoWindow): CharSequence {
+                return "${title}"
+            }
+        }
+        infoWindow.open(marker)
+
+        val cameraUpdate = CameraUpdate.scrollAndZoomTo(LatLng(lat, lon), 11.0)
+        naverMap.moveCamera(cameraUpdate)
+
+    }
+
+    companion object {
+        private const val LOCATION_PERMISSION_REQUEST_CODE = 1000
+        private const val REQUEST_ACCESS_LOCATION_PERMISSIONS = 1000
     }
 }
 

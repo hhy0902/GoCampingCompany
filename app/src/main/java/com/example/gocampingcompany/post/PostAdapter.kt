@@ -35,7 +35,6 @@ class PostAdapter(
             val auth : FirebaseAuth = Firebase.auth
 
             val title = itemView.findViewById<TextView>(R.id.titleTextView)
-            val image = itemView.findViewById<ImageView>(R.id.postImageView)
             val name = itemView.findViewById<TextView>(R.id.nameTextView)
             val date = itemView.findViewById<TextView>(R.id.dateTextView)
             val delete = itemView.findViewById<Button>(R.id.deleteButton)
@@ -53,16 +52,6 @@ class PostAdapter(
                 itemClick(item)
             }
 
-//            storageRef.child("post/image").child("${item.writeDate}${item.title}${item.content}${item.email}${item.name}.png").downloadUrl
-//                .addOnSuccessListener {
-//                    Glide.with(image.context)
-//                        .load(it)
-//                        .into(image)
-//                }
-//                .addOnFailureListener {
-//                    //image.visibility = INVISIBLE
-//                }
-
             title.text = item.title
             name.text = item.name
             date.text = item.writeDate
@@ -74,7 +63,7 @@ class PostAdapter(
                 updateButtonClick(item)
                 Log.d("asdf time", "${item.time}")
                 Log.d("asdf url", "${item.imageUrl}")
-                storageRef.child("post/image").child("${item.writeDate}${item.title}${item.content}${item.email}${item.name}.png").downloadUrl
+                storageRef.child("post/image").child("${item.writeDateDetail}${item.title}${item.content}${item.email}${item.name}.png").downloadUrl
                     .addOnSuccessListener {
                         Log.d("asdf time", "${it}")
                     }.addOnFailureListener {

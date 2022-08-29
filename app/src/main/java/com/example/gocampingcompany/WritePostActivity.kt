@@ -40,6 +40,8 @@ class WritePostActivity : AppCompatActivity() {
     }
 
     private val time = System.currentTimeMillis()
+    @SuppressLint("NewApi")
+    private val writeDateDetail = LocalDateTime.now().toString()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -88,7 +90,7 @@ class WritePostActivity : AppCompatActivity() {
         val month = LocalDateTime.now().monthValue
         val day = LocalDateTime.now().dayOfMonth
         val writeDate = "${year}${month}${day}"
-        val writeDateDetail = LocalDateTime.now().toString()
+        //val writeDateDetail = LocalDateTime.now().toString()
         val email = auth.currentUser?.email
 
         Log.d("uri", "${uri}")
@@ -111,7 +113,6 @@ class WritePostActivity : AppCompatActivity() {
                 Log.d("succees", "success db")
                 Toast.makeText(this, "post 성공", Toast.LENGTH_SHORT).show()
                 finish()
-
             }
             .addOnFailureListener {
                 Log.d("faild", "faild db")
@@ -131,11 +132,13 @@ class WritePostActivity : AppCompatActivity() {
         val month = LocalDateTime.now().monthValue
         val day = LocalDateTime.now().dayOfMonth
         val writeDate = "${year}${month}${day}"
+        //val writeDateDetail = LocalDateTime.now().toString()
 
         val day2 = LocalDateTime.now().dayOfYear
         val email = auth.currentUser?.email
 
-        val fileName = "${writeDate}${title}${content}${email}${name}.png"
+        val fileName = "${writeDateDetail}${title}${content}${email}${name}.png"
+        Log.d("writeDateDetail","${writeDateDetail}")
 
         imageFileUri?.let {
             storage.reference.child("post/image").child(fileName)

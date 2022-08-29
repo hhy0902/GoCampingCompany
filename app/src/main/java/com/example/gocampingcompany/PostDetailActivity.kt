@@ -30,11 +30,12 @@ class PostDetailActivity : AppCompatActivity() {
         val name = intent.getStringExtra("name")
         val writeDate = intent.getStringExtra("writeDate")
         val email = intent.getStringExtra("email")
+        val writeDateDetail = intent.getStringExtra("writeDateDetail")
 
         binding.titleTextView.text = title
         binding.contentTextView.text = content
 
-        storageRef.child("post/image").child("${writeDate}${title}${content}${email}${name}.png").downloadUrl
+        storageRef.child("post/image").child("${writeDateDetail}${title}${content}${email}${name}.png").downloadUrl
             .addOnSuccessListener {
                 Glide.with(binding.imageView.context)
                     .load(it)

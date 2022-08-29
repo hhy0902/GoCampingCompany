@@ -61,6 +61,7 @@ class PostFragment : Fragment(R.layout.fragment_post) {
                 putExtra("content","${it.content}")
                 putExtra("email","${it.email}")
                 putExtra("name","${it.name}")
+                putExtra("writeDateDetail","${it.writeDateDetail}")
             }
 
             startActivity(intent)
