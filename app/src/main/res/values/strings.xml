@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">GoCampingCompany</string>
+    <string name="detailPageNotice">❇︎ \n등록된 정보는 현장상황과 다소 다를 수 있으니 반려동물 동반 여부, 부가 시설물, 추가차량 등 원활한 캠핑을 위해 꼭 필요한 사항은 해당 캠핑장에 미리 확인하시기 바랍니다.</string>
 </resources>

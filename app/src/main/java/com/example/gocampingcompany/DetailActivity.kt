@@ -47,7 +47,7 @@ class DetailActivity : AppCompatActivity(), OnMapReadyCallback {
         val gnrlSiteCo = intent.getStringExtra("gnrlSiteCo") // 일반야영장
         val glampSiteCo = intent.getStringExtra("glampSiteCo") // 글램핑시설
 
-       val glampInnerFclty = intent.getStringExtra("glampInnerFclty") // 내부시설
+        val glampInnerFclty = intent.getStringExtra("glampInnerFclty") // 내부시설
 
         val brazierCl = intent.getStringExtra("brazierCl") // 화로대
 
@@ -66,6 +66,21 @@ class DetailActivity : AppCompatActivity(), OnMapReadyCallback {
         val siteBottomCl4 = intent.getStringExtra("siteBottomCl4") // 자갈
         val siteBottomCl5 = intent.getStringExtra("siteBottomCl5") // 맨흙
 
+        if(siteBottomCl1 != "0") {
+            bottomStringBuffer.append("잔디 (${siteBottomCl1})")
+        }
+        if(siteBottomCl2 != "0") {
+            bottomStringBuffer.append("파쇄석 (${siteBottomCl2})")
+        }
+        if(siteBottomCl3 != "0") {
+            bottomStringBuffer.append("테크 (${siteBottomCl3})")
+        }
+        if(siteBottomCl4 != "0") {
+            bottomStringBuffer.append("자갈 (${siteBottomCl4})")
+        }
+        if(siteBottomCl5 != "0") {
+            bottomStringBuffer.append("맨흙 (${siteBottomCl5})")
+        }
 
         val sbrsClInfo = sbrsCl?.split(",")
         val sbrsClInfoList = mutableListOf<String>()
@@ -98,13 +113,31 @@ class DetailActivity : AppCompatActivity(), OnMapReadyCallback {
         } else {
             binding.introTextView.text = intro.toString()
         }
-        binding.sbrsClTextView.text = sbrsCl
+
+        when(sbrsCl?.length) {
+            0 -> binding.sbrsClTextView.text = "시설 정보가 없습니다."
+            else -> binding.sbrsClTextView.text = sbrsCl
+        }
 
         binding.facilityTextView.text = "일반야영장 : ${gnrlSiteCo} • 글램핑시설 : ${glampSiteCo}"
         binding.etcInfoTextView.text = "반려동물 동반 ${animalCmgCl}"
-        binding.internalTextView.text = "${glampInnerFclty}"
-        binding.fireTextView.text = "${brazierCl}"
+        Log.d("asdf glampInnerFclty","${glampInnerFclty?.length}")
+        when(glampInnerFclty?.length) {
+            0 -> binding.internalTextView.text = "정보가 없습니다."
+            else -> binding.internalTextView.text = "${glampInnerFclty}"
+        }
+        Log.d("asdf brazierCl","${brazierCl?.length}")
+        when(brazierCl?.length) {
+            0 -> binding.fireTextView.text = "정보가 없습니다."
+            else -> binding.fireTextView.text = "${brazierCl}"
+        }
         binding.safeTextView.text = "소화기 (${extshrCo}), 방화수 (${frprvtWrppCo}), 방화사 (${frprvtSandCo}), 화재감지기 (${fireSensorCo})"
+        Log.d("asdf bottomStringBuffer size","${bottomStringBuffer.length}")
+        when(bottomStringBuffer.length) {
+            0 -> binding.floorTextView.text = "정보가 없습니다."
+            else -> binding.floorTextView.text = bottomStringBuffer.toString()
+        }
+
 
         binding.homepageButton.setOnClickListener {
             try {
