@@ -8,17 +8,15 @@ import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
-import android.view.View.GONE
-import android.view.View.VISIBLE
-import android.widget.Button
+import android.view.View
 import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AlertDialog
 import androidx.core.content.ContextCompat
-import com.example.gocampingcompany.databinding.ActivityWritePostBinding
-import com.example.gocampingcompany.post.PostModel
+import com.bumptech.glide.Glide
+import com.example.gocampingcompany.databinding.ActivityEditPostBinding
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.ktx.firestore
@@ -26,25 +24,46 @@ import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.ktx.storage
 import java.time.LocalDateTime
 
-class WritePostActivity : AppCompatActivity() {
+class EditPostActivity : AppCompatActivity() {
 
     lateinit var startActivityLauncher : ActivityResultLauncher<Intent>
     val storage = Firebase.storage
     private val db = Firebase.firestore
     var imageFileUri : Uri? = null
     private val auth : FirebaseAuth = Firebase.auth
-
-    private val binding by lazy {
-        ActivityWritePostBinding.inflate(layoutInflater)
-    }
+    val storageRef = storage.reference
 
     private val time = System.currentTimeMillis()
-    @SuppressLint("NewApi")
-    private val writeDateDetail = LocalDateTime.now().toString()
 
+    private val binding by lazy {
+        ActivityEditPostBinding.inflate(layoutInflater)
+    }
+
+    @SuppressLint("NewApi")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
+
+        val title = intent.getStringExtra("title")
+        val content = intent.getStringExtra("content")
+        val name = intent.getStringExtra("name")
+        val writeDate = intent.getStringExtra("writeDate")
+        val email = intent.getStringExtra("email")
+        val writeDateDetail = intent.getStringExtra("writeDateDetail")
+
+        binding.titleTextView.setText("${title}")
+        binding.contentTextView.setText("${content}")
+
+        storageRef.child("post/image").child("${writeDateDetail}${email}${name}.png").downloadUrl
+            .addOnSuccessListener {
+                Glide.with(binding.imageView.context)
+                    .load(it)
+                    .into(binding.imageView)
+            }
+            .addOnFailureListener {
+                Log.d("no image","no image")
+            }
+
 
         startActivityLauncher =
             registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
@@ -52,10 +71,9 @@ class WritePostActivity : AppCompatActivity() {
                     RESULT_OK -> {
                         val selectedImageUri : Uri? = it.data?.data
                         if (selectedImageUri != null) {
-                            binding.imageView11.setImageURI(selectedImageUri)
+                            binding.imageView.setImageURI(selectedImageUri)
                             imageFileUri = selectedImageUri
                             Log.d("photo uri =", "${imageFileUri}")
-                            //upLoadPhoto()
 
                         } else {
                             Toast.makeText(this, "사진을 가져오지 못했습니다.", Toast.LENGTH_SHORT).show()
@@ -65,34 +83,31 @@ class WritePostActivity : AppCompatActivity() {
             }
 
         ininAddPhotoButton()
-        postButton()
-    }
-
-    @SuppressLint("NewApi")
-    private fun postButton() {
-        binding.addPostButton.setOnClickListener {
-            binding.progressBar.visibility = VISIBLE
+        binding.editPostButton.setOnClickListener {
             upLoadPhoto()
             upLoadPost()
         }
+
     }
+
+//    @SuppressLint("NewApi")
+//    private fun postButton() {
+//        binding.editPostButton.setOnClickListener {
+//            upLoadPhoto()
+//            upLoadPost()
+//        }
+//    }
 
     @RequiresApi(Build.VERSION_CODES.O)
     private fun upLoadPost() {
-        val title = binding.postTitleTextView.text.toString()
-        val content = binding.postContentTextView.text.toString()
         val id = "${auth.currentUser?.uid}"
-        val name = auth.currentUser?.email?.split("@")?.get(0).toString()
-//        val time = "${System.currentTimeMillis()}"
         val uri = imageFileUri.toString()
-        val year = LocalDateTime.now().year
-        val month = LocalDateTime.now().monthValue
-        val day = LocalDateTime.now().dayOfMonth
-        val writeDate = "${year}${month}${day}"
-        //val writeDateDetail = LocalDateTime.now().toString()
-        val email = auth.currentUser?.email
-
-        Log.d("uri", "${uri}")
+        val title = binding.titleTextView.text.toString()
+        val content = binding.contentTextView.text.toString()
+        val name = intent.getStringExtra("name")
+        val writeDate = intent.getStringExtra("writeDate")
+        val email = intent.getStringExtra("email")
+        val writeDateDetail = intent.getStringExtra("writeDateDetail")
 
         val post = hashMapOf(
             "title" to title,
@@ -105,7 +120,6 @@ class WritePostActivity : AppCompatActivity() {
             "email" to email,
             "writeDateDetail" to writeDateDetail
         )
-        //db.collection("post").document("${System.currentTimeMillis()}${auth.currentUser?.uid}")
         db.collection("post").document("${writeDateDetail}${auth.currentUser?.uid}")
             .set(post)
             .addOnSuccessListener {
@@ -121,23 +135,14 @@ class WritePostActivity : AppCompatActivity() {
 
     @SuppressLint("NewApi")
     private fun upLoadPhoto() {
-        val title = binding.postTitleTextView.text.toString()
-        val content = binding.postContentTextView.text.toString()
-        val id = "${auth.currentUser?.uid}"
-        val name = auth.currentUser?.email?.split("@")?.get(0).toString()
-//        val time = "${System.currentTimeMillis()}"
-        val uri = imageFileUri.toString()
-        val year = LocalDateTime.now().year
-        val month = LocalDateTime.now().monthValue
-        val day = LocalDateTime.now().dayOfMonth
-        val writeDate = "${year}${month}${day}"
-        //val writeDateDetail = LocalDateTime.now().toString()
-
-        val day2 = LocalDateTime.now().dayOfYear
-        val email = auth.currentUser?.email
+        val title = intent.getStringExtra("title")
+        val content = intent.getStringExtra("content")
+        val name = intent.getStringExtra("name")
+        val writeDate = intent.getStringExtra("writeDate")
+        val email = intent.getStringExtra("email")
+        val writeDateDetail = intent.getStringExtra("writeDateDetail")
 
         val fileName = "${writeDateDetail}${email}${name}.png"
-        Log.d("writeDateDetail","${writeDateDetail}")
 
         imageFileUri?.let {
             storage.reference.child("post/image").child(fileName)
@@ -154,8 +159,9 @@ class WritePostActivity : AppCompatActivity() {
 
     }
 
+
     private fun ininAddPhotoButton() {
-        binding.addPhotoButton.setOnClickListener {
+        binding.editPostImageButton.setOnClickListener {
             when {
                 ContextCompat.checkSelfPermission(
                     this,
@@ -182,22 +188,18 @@ class WritePostActivity : AppCompatActivity() {
     }
 
     private fun showPermissionContextPopup() {
-            AlertDialog.Builder(this)
-                .setTitle("권한이 필요합니다.")
-                .setMessage("갤러리에서 사진을 불러오기 위해 권한이 필요합니다.")
-                .setPositiveButton("동의하기", { _, _ ->
-                    requestPermissions(arrayOf(android.Manifest.permission.READ_EXTERNAL_STORAGE),1000)
-                })
-                .setNegativeButton("취소하기", { _, _ -> })
-                .create()
-                .show()
+        AlertDialog.Builder(this)
+            .setTitle("권한이 필요합니다.")
+            .setMessage("갤러리에서 사진을 불러오기 위해 권한이 필요합니다.")
+            .setPositiveButton("동의하기", { _, _ ->
+                requestPermissions(arrayOf(android.Manifest.permission.READ_EXTERNAL_STORAGE),1000)
+            })
+            .setNegativeButton("취소하기", { _, _ -> })
+            .create()
+            .show()
 
     }
 }
-
-
-
-
 
 
 

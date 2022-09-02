@@ -197,7 +197,6 @@ class DetailActivity : AppCompatActivity(), OnMapReadyCallback {
 
     companion object {
         private const val LOCATION_PERMISSION_REQUEST_CODE = 1000
-        private const val REQUEST_ACCESS_LOCATION_PERMISSIONS = 1000
     }
 }
 

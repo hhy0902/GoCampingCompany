@@ -81,7 +81,6 @@ class CampingMapFragment : Fragment(R.layout.fragment_campingmap), OnMapReadyCal
         }, campingMapItemClick = {
             Toast.makeText(activity, "${it.facltNm}", Toast.LENGTH_SHORT).show()
         }, campingDetailButtonClick = {
-            Toast.makeText(activity, "title : ${it.facltNm}", Toast.LENGTH_SHORT).show()
             val intent = Intent(activity, DetailActivity::class.java)
             with(intent) {
                 putExtra("title", "${it.facltNm}")

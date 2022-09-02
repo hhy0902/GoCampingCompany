@@ -33,7 +33,6 @@ class SearchFragment : Fragment(R.layout.fragment_search) {
         val fragmentSearchBinding = FragmentSearchBinding.bind(view)
 
         searchAdapter = SearchAdapter(searchItemClick = {
-            Toast.makeText(activity, "title : ${it.facltNm}", Toast.LENGTH_SHORT).show()
             val intent = Intent(activity, DetailActivity::class.java)
             with(intent) {
                 putExtra("title", "${it.facltNm}")

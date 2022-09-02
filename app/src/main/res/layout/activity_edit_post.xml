@@ -6,11 +6,14 @@
     android:layout_height="match_parent"
     tools:context=".PostDetailActivity">
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatEditText
         android:id="@+id/titleTextView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="5dp"
+        android:focusable="true"
+        android:inputType="text"
+        android:selectAllOnFocus="true"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -24,24 +27,35 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/titleTextView" />
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatEditText
         android:id="@+id/contentTextView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="5dp"
+        android:selectAllOnFocus="true"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/imageView" />
 
     <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/editPostButton"
+        android:id="@+id/editPostImageButton"
         android:layout_width="match_parent"
-        android:text="수정하기"
+        android:text="image 수정하기"
         android:layout_height="wrap_content"
         android:layout_marginTop="5dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/contentTextView" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/editPostButton"
+        android:layout_width="match_parent"
+        android:text="post 수정하기"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/editPostImageButton" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
 

@@ -63,7 +63,7 @@ class PostAdapter(
                 updateButtonClick(item)
                 Log.d("asdf time", "${item.time}")
                 Log.d("asdf url", "${item.imageUrl}")
-                storageRef.child("post/image").child("${item.writeDateDetail}${item.title}${item.content}${item.email}${item.name}.png").downloadUrl
+                storageRef.child("post/image").child("${item.writeDateDetail}${item.email}${item.name}.png").downloadUrl
                     .addOnSuccessListener {
                         Log.d("asdf time", "${it}")
                     }.addOnFailureListener {

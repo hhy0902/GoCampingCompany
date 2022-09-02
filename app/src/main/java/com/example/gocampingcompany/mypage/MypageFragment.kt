@@ -35,33 +35,16 @@ class MypageFragment : Fragment(R.layout.fragment_mypage) {
 
         val fragmentMypageBinding = FragmentMypageBinding.bind(view)
 
-//        fragmentMypageBinding.tabLayout.addTab(fragmentMypageBinding.tabLayout.newTab().setText("tab1"))
-//        fragmentMypageBinding.tabLayout.addTab(fragmentMypageBinding.tabLayout.newTab().setText("tab2"))
-
         val tabTitleArray = arrayListOf<String>(
             "즐겨찾기",
             "Profile"
         )
 
-        fragmentMypageBinding.viewPager2.adapter = FragmentAdapter(activity!!,2)
+        fragmentMypageBinding.viewPager2.adapter = FragmentAdapter(activity!!,tabTitleArray.size)
 
         TabLayoutMediator(fragmentMypageBinding.tabLayout, fragmentMypageBinding.viewPager2) { tab, position ->
             tab.text = "${tabTitleArray.get(position)}"
         }.attach()
-
-//        fragmentMypageBinding.tabLayout.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
-//            override fun onTabSelected(tab: TabLayout.Tab?) {
-//                fragmentMypageBinding.viewPager2.setCurrentItem(tab!!.position)
-//            }
-//
-//            override fun onTabUnselected(tab: TabLayout.Tab?) {
-//
-//            }
-//
-//            override fun onTabReselected(tab: TabLayout.Tab?) {
-//            }
-//
-//        })
 
     }
 }

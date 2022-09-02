@@ -48,7 +48,6 @@ class LocationFragment : Fragment(R.layout.fragment_location) {
         fetchLocation()
 
         locationAdapter = LocationAdapter(locationItemClick = {
-            Toast.makeText(activity, "title : ${it.facltNm}", Toast.LENGTH_SHORT).show()
             val intent = Intent(activity, DetailActivity::class.java)
             with(intent) {
                 putExtra("title", "${it.facltNm}")

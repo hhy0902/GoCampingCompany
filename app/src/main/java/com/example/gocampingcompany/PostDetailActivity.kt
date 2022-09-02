@@ -1,5 +1,6 @@
 package com.example.gocampingcompany
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -35,7 +36,7 @@ class PostDetailActivity : AppCompatActivity() {
         binding.titleTextView.text = title
         binding.contentTextView.text = content
 
-        storageRef.child("post/image").child("${writeDateDetail}${title}${content}${email}${name}.png").downloadUrl
+        storageRef.child("post/image").child("${writeDateDetail}${email}${name}.png").downloadUrl
             .addOnSuccessListener {
                 Glide.with(binding.imageView.context)
                     .load(it)
@@ -46,6 +47,20 @@ class PostDetailActivity : AppCompatActivity() {
                 Log.d("no image","no image")
             }
 
+        binding.editPostButton.setOnClickListener {
+            val intent = Intent(this, EditPostActivity::class.java)
+            with(intent) {
+                putExtra("title","${title}")
+                putExtra("content","${content}")
+                putExtra("name","${name}")
+                putExtra("writeDate","${writeDate}")
+                putExtra("email","${email}")
+                putExtra("writeDateDetail","${writeDateDetail}")
+            }
+
+            startActivity(intent)
+            finish()
+        }
 
     }
 
