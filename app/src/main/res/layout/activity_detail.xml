@@ -146,6 +146,28 @@
                 app:layout_constraintTop_toBottomOf="@id/operDeClTextView"
                 tools:text="homepage" />
 
+            <TextView
+                android:id="@+id/starTextView"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="5dp"
+                android:layout_marginVertical="3dp"
+                android:text="즐겨찾기"
+                app:layout_constraintEnd_toStartOf="@id/starCehckBox"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/homepageTextView" />
+
+            <androidx.appcompat.widget.AppCompatCheckBox
+                android:id="@+id/starCehckBox"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="5dp"
+                android:layout_marginVertical="3dp"
+                app:layout_constraintBottom_toBottomOf="@id/starTextView"
+                app:layout_constraintEnd_toStartOf="@id/homepageButton"
+                app:layout_constraintStart_toEndOf="@id/starTextView"
+                app:layout_constraintTop_toTopOf="@id/starTextView" />
+
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/homepageButton"
                 android:layout_width="wrap_content"

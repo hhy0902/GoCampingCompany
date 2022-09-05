@@ -114,7 +114,8 @@ class MainActivity : AppCompatActivity() {
             R.id.toolbarStar -> {
                 Toast.makeText(this, "star click", Toast.LENGTH_SHORT).show()
                 val starFragment = StarFragment()
-                replaceFragment(starFragment)
+                val mypageFragment = MypageFragment()
+                replaceFragment(mypageFragment)
             }
 //            R.id.home -> {
 //                onBackPressed()

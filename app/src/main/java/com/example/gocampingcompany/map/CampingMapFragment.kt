@@ -115,6 +115,8 @@ class CampingMapFragment : Fragment(R.layout.fragment_campingmap), OnMapReadyCal
 
 
 
+
+
             }
 
             startActivity(intent)

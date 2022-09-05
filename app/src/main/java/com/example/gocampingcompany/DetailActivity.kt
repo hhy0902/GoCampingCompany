@@ -152,6 +152,31 @@ class DetailActivity : AppCompatActivity(), OnMapReadyCallback {
 
         }
 
+        binding.starCehckBox.setOnCheckedChangeListener { buttonCheck, isChecked ->
+            if (isChecked) {
+                Toast.makeText(this, "북마크 ", Toast.LENGTH_SHORT).show()
+
+//                val starInfo = hashMapOf(
+//                    "title" to title,
+//                    "content" to content,
+//                    "imageUri" to uri,
+//                    "id" to id,
+//                    "name" to name,
+//                    "writeDate" to "${writeDate}",
+//                    "time" to time.toString(),
+//                    "email" to email,
+//                    "writeDateDetail" to writeDateDetail
+//                )
+
+
+            } else {
+                Toast.makeText(this, "북마크 제거 ", Toast.LENGTH_SHORT).show()
+
+            }
+
+        }
+
+
         locationSource = FusedLocationSource(this, LOCATION_PERMISSION_REQUEST_CODE)
 
         val fm = supportFragmentManager

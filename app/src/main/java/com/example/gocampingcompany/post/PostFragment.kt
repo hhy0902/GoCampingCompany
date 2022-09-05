@@ -78,25 +78,23 @@ class PostFragment : Fragment(R.layout.fragment_post) {
                     .addOnSuccessListener {
                     Log.d("success", "DocumentSnapshot successfully deleted!")
                     Toast.makeText(activity,"DocumentSnapshot successfully deleted!",Toast.LENGTH_SHORT).show()
-                        getPostList()
+                        //getPostList()
+                        getRealTime()
 
                     }
                     .addOnFailureListener { e ->
                         Log.w("fail", "Error deleting document", e)
-                        Toast.makeText(activity, "Error deleting document", Toast.LENGTH_SHORT)
-                            .show()
+                        Toast.makeText(activity, "Error deleting document", Toast.LENGTH_SHORT).show()
                     }
 
-            }, updateButtonClick = {
-                Toast.makeText(activity, "update ${it.title} click", Toast.LENGTH_SHORT).show()
-            })
+            }
+        )
 
         fragmentPostBinding.postRecyclerView.layoutManager = LinearLayoutManager(activity, LinearLayoutManager.VERTICAL, true)
-
         fragmentPostBinding.postRecyclerView.adapter = postAdapter
 
-        getPostList()
-
+        //getPostList()
+        getRealTime()
         bindViews()
 
     }
@@ -104,16 +102,45 @@ class PostFragment : Fragment(R.layout.fragment_post) {
     private fun bindViews() {
         view?.findViewById<SwipeRefreshLayout>(R.id.postSwipeLayout)?.setOnRefreshListener {
             Log.d("asdf refresh","refresh")
-            getPostList()
+            //getPostList()
+            getRealTime()
             view?.findViewById<SwipeRefreshLayout>(R.id.postSwipeLayout)?.isRefreshing = false
 
         }
     }
 
-    private fun getPostList() {
-
+    private fun getRealTime() {
         val postList = mutableListOf<PostModel>()
+        postList.clear()
 
+        val docRef = db.collection("post")
+        docRef.addSnapshotListener { value, error ->
+            if (error != null) {
+                Log.w("asdf error", "Listen failed.", error)
+                return@addSnapshotListener
+            }
+
+            for (document in value!!) {
+                postList.add(PostModel(
+                    "${document.get("title")}",
+                    "${document.get("content")}",
+                    "${document.get("imageUrl")}",
+                    "${document.get("id")}",
+                    "${document.get("name")}",
+                    "${document.get("writeDate")}",
+                    "${document.get("time")}",
+                    "${document.get("email")}",
+                    "${document.get("writeDateDetail")}")
+                )
+                postAdapter.submitList(postList)
+                view?.findViewById<SwipeRefreshLayout>(R.id.postSwipeLayout)?.isRefreshing =
+                    false
+            }
+        }
+    }
+
+    private fun getPostList() {
+        val postList = mutableListOf<PostModel>()
         postList.clear()
         val docRef = db.collection("post")
         docRef
@@ -121,16 +148,19 @@ class PostFragment : Fragment(R.layout.fragment_post) {
             .addOnSuccessListener { result ->
                 for (document in result) {
                     postList.add(PostModel(
-                            "${document.get("title")}", "${document.get("content")}",
-                            "${document.get("imageUrl")}",
-                            "${document.get("id")}",
-                    "${document.get("name")}",
-                    "${document.get("writeDate")}",
-                    "${document.get("time")}",
-                    "${document.get("email")}",
-                    "${document.get("writeDateDetail")}"))
+                        "${document.get("title")}",
+                        "${document.get("content")}",
+                        "${document.get("imageUrl")}",
+                        "${document.get("id")}",
+                        "${document.get("name")}",
+                        "${document.get("writeDate")}",
+                        "${document.get("time")}",
+                        "${document.get("email")}",
+                        "${document.get("writeDateDetail")}")
+                    )
                     postAdapter.submitList(postList)
-                    view?.findViewById<SwipeRefreshLayout>(R.id.postSwipeLayout)?.isRefreshing = false
+                    view?.findViewById<SwipeRefreshLayout>(R.id.postSwipeLayout)?.isRefreshing =
+                        false
                 }
             }
             .addOnFailureListener { exception ->
@@ -142,22 +172,24 @@ class PostFragment : Fragment(R.layout.fragment_post) {
 
     override fun onStart() {
         super.onStart()
-        Log.d("asdf fragment","onStart")
+        Log.d("asdf post fragment","onStart")
     }
 
     override fun onResume() {
         super.onResume()
-        Log.d("asdf fragment","onResume")
+        getRealTime()
+        Log.d("asdf post fragment","onResume")
+
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        Log.d("asdf fragment","onCreate")
+        Log.d("asdf post fragment","onCreate")
     }
 
     override fun onPause() {
         super.onPause()
-        Log.d("asdf fragment","onPause")
+        Log.d("asdf post fragment","onPause")
     }
 
 }

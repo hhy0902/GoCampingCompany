@@ -23,8 +23,7 @@ import java.net.URI
 
 class PostAdapter(
     val itemClick : (PostModel) -> Unit,
-    val deleteButtonClick : (PostModel) -> Unit,
-    val updateButtonClick : (PostModel) -> Unit) : ListAdapter<PostModel, PostAdapter.ViewHolder> (differ){
+    val deleteButtonClick : (PostModel) -> Unit) : ListAdapter<PostModel, PostAdapter.ViewHolder> (differ){
 
     inner class ViewHolder(itemView : View) : RecyclerView.ViewHolder (itemView) {
 
@@ -38,14 +37,11 @@ class PostAdapter(
             val name = itemView.findViewById<TextView>(R.id.nameTextView)
             val date = itemView.findViewById<TextView>(R.id.dateTextView)
             val delete = itemView.findViewById<Button>(R.id.deleteButton)
-            val update = itemView.findViewById<Button>(R.id.updateButton)
 
             if (auth.currentUser?.uid == item.id) {
                 delete.visibility = VISIBLE
-                update.visibility = VISIBLE
             } else {
                 delete.visibility = GONE
-                update.visibility = GONE
             }
 
             itemView.setOnClickListener {
@@ -59,18 +55,8 @@ class PostAdapter(
             delete.setOnClickListener {
                 deleteButtonClick(item)
             }
-            update.setOnClickListener {
-                updateButtonClick(item)
-                Log.d("asdf time", "${item.time}")
-                Log.d("asdf url", "${item.imageUrl}")
-                storageRef.child("post/image").child("${item.writeDateDetail}${item.email}${item.name}.png").downloadUrl
-                    .addOnSuccessListener {
-                        Log.d("asdf time", "${it}")
-                    }.addOnFailureListener {
-                        Log.d("asdf error time", "${it.message}")
-                        Log.d("asdf error", "오류남")
-                    }
-            }
+
+
 
         }
 
