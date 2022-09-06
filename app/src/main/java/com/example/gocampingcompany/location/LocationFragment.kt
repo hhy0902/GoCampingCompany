@@ -34,7 +34,6 @@ class LocationFragment : Fragment(R.layout.fragment_location) {
 
     lateinit var locationAdapter: LocationAdapter
 
-
     private lateinit var fusedLocationProviderClient : FusedLocationProviderClient
     private var cancellationTokenSource : CancellationTokenSource? = null
 
@@ -79,6 +78,12 @@ class LocationFragment : Fragment(R.layout.fragment_location) {
                 putExtra("glampSiteCo","${it.glampSiteCo}")
                 putExtra("mapX","${it.mapX}")
                 putExtra("mapY","${it.mapY}")
+
+                putExtra("doNm","${it.doNm}")
+                putExtra("sigunguNm","${it.sigunguNm}")
+                putExtra("addr2","${it.addr2}")
+                putExtra("contentId","${it.contentId}")
+
 
             }
 

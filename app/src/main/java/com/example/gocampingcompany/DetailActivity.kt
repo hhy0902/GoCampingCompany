@@ -11,6 +11,10 @@ import androidx.fragment.app.FragmentManager
 import com.bumptech.glide.Glide
 import com.example.gocampingcompany.databinding.ActivityDetailBinding
 import com.example.gocampingcompany.map.CampingMapFragment
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.ktx.Firebase
 import com.naver.maps.geometry.LatLng
 import com.naver.maps.map.*
 import com.naver.maps.map.overlay.InfoWindow
@@ -23,6 +27,11 @@ class DetailActivity : AppCompatActivity(), OnMapReadyCallback {
         ActivityDetailBinding.inflate(layoutInflater)
     }
 
+    val db = Firebase.firestore
+    private val auth : FirebaseAuth = Firebase.auth
+
+    private var bookMarkCheck = false
+
     private lateinit var locationSource: FusedLocationSource
     private lateinit var naverMap: NaverMap
 
@@ -32,7 +41,11 @@ class DetailActivity : AppCompatActivity(), OnMapReadyCallback {
 
         val title = intent.getStringExtra("title")
         val image = intent.getStringExtra("image")
+        val doNm = intent.getStringExtra("doNm")
+        val sigunguNm = intent.getStringExtra("sigunguNm")
         val address = intent.getStringExtra("addr1")
+        val address2 = intent.getStringExtra("addr2")
+        val contentId = intent.getStringExtra("contentId")
         val lineIntro = intent.getStringExtra("lineIntro")
         val tel = intent.getStringExtra("tel")
         val lctCl = intent.getStringExtra("lctCl") // 캠핑장 환경
@@ -152,25 +165,55 @@ class DetailActivity : AppCompatActivity(), OnMapReadyCallback {
 
         }
 
-        binding.starCehckBox.setOnCheckedChangeListener { buttonCheck, isChecked ->
+        db.collection("${auth.currentUser?.uid}star").document("${title}${address}${address2}")
+            .get()
+            .addOnSuccessListener { document ->
+                Log.d("asdf document", "${document.get("title")}")
+                Log.d("asdf document", "${document.get("addr1")}")
+                Log.d("asdf document", "${document.get("addr2")}")
+                if (document.get("title") == title) {
+                    bookMarkCheck = true
+                    binding.starCheckBox.isChecked = true
+                }
+            }
+            .addOnFailureListener {
+                Log.d("asdf star fail", "fail")
+                binding.starCheckBox.isChecked = false
+            }
+
+        binding.starCheckBox.setOnCheckedChangeListener { buttonCheck, isChecked ->
             if (isChecked) {
-                Toast.makeText(this, "북마크 ", Toast.LENGTH_SHORT).show()
+                if (bookMarkCheck != true) {
+                    Toast.makeText(this, "북마크 추가 완료", Toast.LENGTH_SHORT).show()
+                }
+                val starInfo = hashMapOf(
+                    "title" to title,
+                    "addr1" to address,
+                    "addr2" to address2,
+                    "tel" to tel,
+                    "doName" to doNm,
+                    "siName" to sigunguNm,
+                    "image" to image,
+                    "contentId" to contentId
+                )
+                db.collection("${auth.currentUser?.uid}star").document("${title}${address}${address2}")
+                    .set(starInfo)
+                    .addOnSuccessListener {
 
-//                val starInfo = hashMapOf(
-//                    "title" to title,
-//                    "content" to content,
-//                    "imageUri" to uri,
-//                    "id" to id,
-//                    "name" to name,
-//                    "writeDate" to "${writeDate}",
-//                    "time" to time.toString(),
-//                    "email" to email,
-//                    "writeDateDetail" to writeDateDetail
-//                )
-
+                    }
+                    .addOnFailureListener {
+                        Toast.makeText(this, "북마크 추가 실패", Toast.LENGTH_SHORT).show()
+                    }
 
             } else {
-                Toast.makeText(this, "북마크 제거 ", Toast.LENGTH_SHORT).show()
+                db.collection("star").document("${title}${address}${address2}")
+                    .delete()
+                    .addOnSuccessListener {
+                        Toast.makeText(this, "북마크 제거 완료", Toast.LENGTH_SHORT).show()
+                    }
+                    .addOnFailureListener {
+                        Toast.makeText(this, "북마크 제거 실패", Toast.LENGTH_SHORT).show()
+                    }
 
             }
 

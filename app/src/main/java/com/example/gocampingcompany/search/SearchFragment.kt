@@ -65,6 +65,10 @@ class SearchFragment : Fragment(R.layout.fragment_search) {
                 putExtra("mapX","${it.mapX}")
                 putExtra("mapY","${it.mapY}")
 
+                putExtra("doNm","${it.doNm}")
+                putExtra("sigunguNm","${it.sigunguNm}")
+                putExtra("addr2","${it.addr2}")
+
             }
 
             startActivity(intent)
