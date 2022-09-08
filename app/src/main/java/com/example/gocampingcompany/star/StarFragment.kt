@@ -40,6 +40,48 @@ class StarFragment() : Fragment(R.layout.fragment_star) {
 
         starAdapter = StarAdapter(itemClick = {
             Toast.makeText(activity,"${it.title}",Toast.LENGTH_SHORT).show()
+
+            val intent = Intent(activity, DetailActivity::class.java)
+            with(intent) {
+                putExtra("addr1", "${it.addr1}")
+                putExtra("tel","${it.tel}")
+                putExtra("mapX","${it.lon}")
+                putExtra("mapY","${it.lat}")
+                putExtra("addr2","${it.addr2}")
+
+                putExtra("title", "${it.title}")
+                putExtra("image","${it.image}")
+                putExtra("addr1", "${it.addr1}")
+                putExtra("lineIntro","${it.lineIntro}")
+                putExtra("tel","${it.tel}")
+                putExtra("lctCl","${it.lctCl}")
+                putExtra("facltDivNm","${it.facltDivNm}")
+                putExtra("induty", "${it.induty}")
+                putExtra("operPdCl", "${it.operPdCl}")
+                putExtra("operDeCl","${it.operDeCl}")
+                putExtra("homepage", "${it.homepage}")
+                putExtra("intro","${it.intro}")
+                putExtra("sbrsCl", "${it.sbrsCl}")
+                putExtra("glampInnerFclty","${it.glampInnerFclty}")
+                putExtra("brazierCl","${it.brazierCl}")
+                putExtra("extshrCo","${it.extshrCo}")
+                putExtra("frprvtWrppCo","${it.frprvtWrppCo}")
+                putExtra("frprvtSandCo","${it.frprvtSandCo}")
+                putExtra("fireSensorCo","${it.fireSensorCo}")
+                putExtra("animalCmgCl","${it.animalCmgCl}")
+                putExtra("siteBottomCl1","${it.siteBottomCl1}")
+                putExtra("siteBottomCl2","${it.siteBottomCl2}")
+                putExtra("siteBottomCl3","${it.siteBottomCl3}")
+                putExtra("siteBottomCl4","${it.siteBottomCl4}")
+                putExtra("siteBottomCl5","${it.siteBottomCl5}")
+                putExtra("gnrlSiteCo","${it.gnrlSiteCo}")
+                putExtra("glampSiteCo","${it.glampSiteCo}")
+                putExtra("addr2","${it.addr2}")
+            }
+
+            startActivity(intent)
+
+
         })
 
         fragmentStarBinding.recyclerView.adapter = starAdapter
@@ -72,7 +114,32 @@ class StarFragment() : Fragment(R.layout.fragment_star) {
                         "${document.get("image")}",
                         "${document.get("doName")}",
                         "${document.get("siName")}",
-                        "${document.get("contentId")}"
+                        "${document.get("contentId")}",
+                        "${document.get("lat")}",
+                        "${document.get("lon")}",
+                        "${document.get("lineIntro")}",
+                        "${document.get("lctCl")}",
+                        "${document.get("facltDivNm")}",
+                        "${document.get("induty")}",
+                        "${document.get("operPdCl")}",
+                        "${document.get("operDeCl")}",
+                        "${document.get("homepage")}",
+                        "${document.get("intro")}",
+                        "${document.get("sbrsCl")}",
+                        "${document.get("gnrlSiteCo")}",
+                        "${document.get("glampSiteCo")}",
+                        "${document.get("glampInnerFclty")}",
+                        "${document.get("brazierCl")}",
+                        "${document.get("extshrCo")}",
+                        "${document.get("frprvtWrppCo")}",
+                        "${document.get("frprvtSandCo")}",
+                        "${document.get("fireSensorCo")}",
+                        "${document.get("animalCmgCl")}",
+                        "${document.get("siteBottomCl1")}",
+                        "${document.get("siteBottomCl2")}",
+                        "${document.get("siteBottomCl3")}",
+                        "${document.get("siteBottomCl4")}",
+                        "${document.get("siteBottomCl5")}",
                         )
                     )
                 }
@@ -88,6 +155,7 @@ class StarFragment() : Fragment(R.layout.fragment_star) {
 
     override fun onResume() {
         super.onResume()
+        getStar()
         Log.d("asdf star fragment","onResume")
     }
 

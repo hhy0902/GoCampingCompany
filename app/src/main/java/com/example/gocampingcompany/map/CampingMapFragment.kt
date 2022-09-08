@@ -117,9 +117,6 @@ class CampingMapFragment : Fragment(R.layout.fragment_campingmap), OnMapReadyCal
                 putExtra("sigunguNm","${it.sigunguNm}")
                 putExtra("addr2","${it.addr2}")
 
-
-
-
             }
 
             startActivity(intent)

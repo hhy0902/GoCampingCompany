@@ -80,7 +80,6 @@ class PostFragment : Fragment(R.layout.fragment_post) {
                     Toast.makeText(activity,"DocumentSnapshot successfully deleted!",Toast.LENGTH_SHORT).show()
                         //getPostList()
                         getRealTime()
-
                     }
                     .addOnFailureListener { e ->
                         Log.w("fail", "Error deleting document", e)
@@ -119,7 +118,6 @@ class PostFragment : Fragment(R.layout.fragment_post) {
                 Log.w("asdf error", "Listen failed.", error)
                 return@addSnapshotListener
             }
-
             for (document in value!!) {
                 postList.add(PostModel(
                     "${document.get("title")}",
@@ -142,6 +140,7 @@ class PostFragment : Fragment(R.layout.fragment_post) {
     private fun getPostList() {
         val postList = mutableListOf<PostModel>()
         postList.clear()
+
         val docRef = db.collection("post")
         docRef
             .get()

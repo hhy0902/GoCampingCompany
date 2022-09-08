@@ -179,12 +179,17 @@ class DetailActivity : AppCompatActivity(), OnMapReadyCallback {
             .addOnFailureListener {
                 Log.d("asdf star fail", "fail")
                 binding.starCheckBox.isChecked = false
+                bookMarkCheck = false
             }
 
         binding.starCheckBox.setOnCheckedChangeListener { buttonCheck, isChecked ->
-            if (isChecked) {
-                if (bookMarkCheck != true) {
+            if (isChecked && bookMarkCheck == false) {
+                val lat = intent.getStringExtra("mapY")
+                val lon = intent.getStringExtra("mapX")
+
+                if (bookMarkCheck == false) {
                     Toast.makeText(this, "북마크 추가 완료", Toast.LENGTH_SHORT).show()
+                    bookMarkCheck = true
                 }
                 val starInfo = hashMapOf(
                     "title" to title,
@@ -194,7 +199,33 @@ class DetailActivity : AppCompatActivity(), OnMapReadyCallback {
                     "doName" to doNm,
                     "siName" to sigunguNm,
                     "image" to image,
-                    "contentId" to contentId
+                    "contentId" to contentId,
+                    "lat" to lat,
+                    "lon" to lon,
+                    "lineIntro" to lineIntro,
+                    "lctCl" to lctCl,
+                    "facltDivNm" to facltDivNm,
+                    "induty" to induty,
+                    "operPdCl" to operPdCl,
+                    "operDeCl" to operDeCl,
+                    "homepage" to homepage,
+                    "intro" to intro,
+                    "sbrsCl" to sbrsCl,
+                    "gnrlSiteCo" to gnrlSiteCo,
+                    "glampSiteCo" to glampSiteCo,
+                    "glampInnerFclty" to glampInnerFclty,
+                    "brazierCl" to brazierCl,
+                    "extshrCo" to extshrCo,
+                    "frprvtWrppCo" to frprvtWrppCo,
+                    "frprvtSandCo" to frprvtSandCo,
+                    "fireSensorCo" to fireSensorCo,
+                    "animalCmgCl" to animalCmgCl,
+                    "siteBottomCl1" to siteBottomCl1,
+                    "siteBottomCl2" to siteBottomCl2,
+                    "siteBottomCl3" to siteBottomCl3,
+                    "siteBottomCl4" to siteBottomCl4,
+                    "siteBottomCl5" to siteBottomCl5
+
                 )
                 db.collection("${auth.currentUser?.uid}star").document("${title}${address}${address2}")
                     .set(starInfo)
@@ -205,14 +236,19 @@ class DetailActivity : AppCompatActivity(), OnMapReadyCallback {
                         Toast.makeText(this, "북마크 추가 실패", Toast.LENGTH_SHORT).show()
                     }
 
-            } else {
-                db.collection("star").document("${title}${address}${address2}")
+            } else if(isChecked == false) {
+                db.collection("${auth.currentUser?.uid}star").document("${title}${address}${address2}")
                     .delete()
                     .addOnSuccessListener {
-                        Toast.makeText(this, "북마크 제거 완료", Toast.LENGTH_SHORT).show()
+                        if (bookMarkCheck) {
+                            Toast.makeText(this, "북마크 제거 완료", Toast.LENGTH_SHORT).show()
+                            bookMarkCheck = false
+                        }
+
                     }
                     .addOnFailureListener {
                         Toast.makeText(this, "북마크 제거 실패", Toast.LENGTH_SHORT).show()
+                        bookMarkCheck = false
                     }
 
             }
@@ -266,6 +302,7 @@ class DetailActivity : AppCompatActivity(), OnMapReadyCallback {
     companion object {
         private const val LOCATION_PERMISSION_REQUEST_CODE = 1000
     }
+
 }
 
 
